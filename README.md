@@ -6,7 +6,7 @@ AI 提示词画廊的源码仓库：本地开发版 + 部署版，单一源头�
 ## 目录结构
 - `shuixian-prompts/` —— 本地开发版（完整 prompts 数据、分类/重分类脚本、本地预览）
 - `shuixian-deploy/` —— 部署版静态站点（直接托管到静态空间即可上线）
-<img width="2880" height="1632" alt="Snipaste_2026-09-16_13-03-36" src="https://github.com/user-attachments/assets/1615d6bd-7572-437d-be1d-2c83d7c35c2b" />
+
 <img width="2880" height="1632" alt="Snipaste_2026-09-16_13-03-11" src="https://github.com/user-attachments/assets/6edb5465-fe4d-4317-9325-4679da9cfc33" />
 <img width="2880" height="1632" alt="Snipaste_2026-09-16_13-03-21" src="https://github.com/user-attachments/assets/26f64928-3d66-4fac-a77a-a8a880c0f5a0" />
 <img width="2880" height="1632" alt="Snipaste_2026-09-16_13-03-28" src="https://github.com/user-attachments/assets/2e2534ab-0ef4-4d30-9183-4ae5a5d74b5d" />
