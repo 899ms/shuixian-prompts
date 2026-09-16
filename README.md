@@ -3,6 +3,16 @@
 AI 提示词画廊的源码仓库：本地开发版 + 部署版，单一源头管理。
 地址：https://prompt.qqsrc.com/
 
+## 界面预览
+
+| 首页 | 提示词画廊 |
+| --- | --- |
+| ![首页](docs/screenshots/home.png) | ![提示词画廊](docs/screenshots/gallery.jpg) |
+
+| 分类总览 | 搜索 |
+| --- | --- |
+| ![分类总览](docs/screenshots/categories.png) | ![搜索](docs/screenshots/search.jpg) |
+
 ## 目录结构
 - `shuixian-prompts/` —— 本地开发版（完整 prompts 数据、分类/重分类脚本、本地预览）
 - `shuixian-deploy/` —— 部署版静态站点（直接托管到静态空间即可上线）
