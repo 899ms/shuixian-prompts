@@ -9,6 +9,7 @@ AI 提示词画廊的源码仓库：本地开发版 + 部署版，单一源头�
 
 | 分类总览 | 搜索 |
 | --- | --- |
+| ![首页](docs/screenshots/home.png) | ![提示词画廊](docs/screenshots/gallery.jpg) |
 | ![分类总览](docs/screenshots/categories.png) | ![搜索](docs/screenshots/search.jpg) |
 
 ## 目录结构
