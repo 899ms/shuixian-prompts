@@ -1,9 +1,9 @@
 # 水仙的AI提示词 · Cloudflare Pages 部署说明
 
-> 本目录是 `classic` 皮肤（5,452 条提示词 / 12 大类 / 79 细类）。
+> 本目录是 `shuixian-deploy-classic` 皮肤（5,452 条提示词 / 12 大类 / 79 细类）。
 > 仓库整体结构与三个版本的对照，见根目录 `README.md`。
 
-本文件夹 `classic/` 是**直接拖拽部署到 Cloudflare Pages** 的包（手动上传方式）。
+本文件夹 `shuixian-deploy-classic/` 是**直接拖拽部署到 Cloudflare Pages** 的包（手动上传方式）。
 
 ## 重要前提（为什么图片不在本文件夹里）
 
@@ -22,10 +22,10 @@ Cloudflare Pages 的**拖拽上传**限制：
 ## 部署步骤
 
 ### 第 0 步（可选）：本地预览部署包
-直接双击 `classic/index.html` 会因 `fetch` 被 CORS 拦截。**仅用于确认页面结构**，
+直接双击 `shuixian-deploy-classic/index.html` 会因 `fetch` 被 CORS 拦截。**仅用于确认页面结构**，
 图片需配置 R2 后才显示。建议用本地服务器：
 ```
-cd classic
+cd shuixian-deploy-classic
 python -m http.server 8091
 # 浏览器打开 http://localhost:8091
 ```
@@ -58,7 +58,7 @@ rclone copy "C:\Users\lianxiang\WorkBuddy\2026-07-23-09-09-54\shuixian-prompts\i
 与页面 `IMG_BASE + "/" + 路径` 一致。
 
 ### 第 3 步：填入 R2 域名（关键）
-打开 `classic/index.html`，找到这一行：
+打开 `shuixian-deploy-classic/index.html`，找到这一行：
 ```js
 const IMG_BASE = "https://<YOUR-BUCKET>.r2.dev";
 ```
@@ -70,7 +70,7 @@ const IMG_BASE = "https://<YOUR-BUCKET>.r2.dev";
 ### 第 4 步：拖拽部署到 Pages
 1. Cloudflare 控制台 → **Workers & Pages** → **Create** → **Pages** → **Upload Assets（直接上传）**。
 2. 项目名填 `shuixian-prompts`（或你喜欢的名字）。
-3. 把本文件夹 `classic/` 整个拖进上传框 → **Save and Deploy**。
+3. 把本文件夹 `shuixian-deploy-classic/` 整个拖进上传框 → **Save and Deploy**。
 4. 部署完成后得到 `https://shuixian-prompts.pages.dev`，即为线上地址。
 
 ### 第 5 步（可选）：绑定自定义域名
@@ -88,4 +88,4 @@ Pages 项目 → **Custom domains** → 添加你的域名，按提示在 DNS �
 ```
 python scripts/build_deploy.py
 ```
-会重新拆分并覆盖 `classic/`，之后改 `IMG_BASE` 再拖拽即可。
+会重新拆分并覆盖 `shuixian-deploy-classic/`，之后改 `IMG_BASE` 再拖拽即可。

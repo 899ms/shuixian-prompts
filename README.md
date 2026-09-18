@@ -38,35 +38,35 @@
 
 | 目录 | 提示词 | 图片 | 页面 | 定位 |
 | --- | ---: | ---: | ---: | --- |
-| `classic/` | 5,452 | 7,386 | 4 | 12 大类 / 79 细类的经典皮肤，「挑一个主题慢慢逛」 |
-| `modern/` | 5,452 | 5,452 | 10 | 页面级拆分（详情 / 搜索 / 全部分类 / 关于 / 赞赏 / 投稿 / 404），数据结构最精简 |
+| `shuixian-deploy-classic/` | 5,452 | 7,386 | 4 | 12 大类 / 79 细类的经典皮肤，「挑一个主题慢慢逛」 |
+| `shuixian-deploy-modern/` | 5,452 | 5,452 | 10 | 页面级拆分（详情 / 搜索 / 全部分类 / 关于 / 赞赏 / 投稿 / 404），数据结构最精简 |
 | `old/shuixian-deploy/` | 17,427 | 19,827 | 4 | 上一版线上站点，多一层 Twitter 收录（3,948 条），编辑式画廊皮肤 |
 | `old/shuixian-prompts/` | 17,427 | — | 4 | 同一套数据的本地开发版，图片不入库（见「图片托管」） |
 
-> `classic/` 与 `modern/` 共用同一套 5,452 条提示词，差别在信息架构与皮肤；
+> `shuixian-deploy-classic/` 与 `shuixian-deploy-modern/` 共用同一套 5,452 条提示词，差别在信息架构与皮肤；
 > `old/` 下两个目录共用 17,427 条那套数据，差别在「是否含图片目录、是否作为部署包」。
 
 ## 仓库结构
 
 ```
 README.md
-docs/screenshots/            三个版本的界面截图
-classic/                     12 大类 / 79 细类皮肤（可独立部署）
+docs/screenshots/                        三个版本的界面截图
+shuixian-deploy-classic/                 12 大类 / 79 细类皮肤（可独立部署）
 ├── index.html  gallery.html  classify.html  favorites.html
-├── components/              header / footer / lightbox / modals（JS 动态注入）
-├── css/base.css             全站样式
-├── js/base.js               公共脚本：数据加载、卡片、灯箱、收藏
+├── components/                          header / footer / lightbox / modals（JS 动态注入）
+├── css/base.css                         全站样式
+├── js/base.js                           公共脚本：数据加载、卡片、灯箱、收藏
 ├── js/{home,gallery,classify,favorites}.js
-├── data/                    数据集
-├── images/                  2 张公众号二维码
-└── _headers                 Cloudflare Pages 缓存策略
-modern/                      页面级拆分皮肤（可独立部署）
+├── data/                                数据集
+├── images/                              2 张公众号二维码
+└── _headers                             Cloudflare Pages 缓存策略
+shuixian-deploy-modern/                  页面级拆分皮肤（可独立部署）
 ├── index.html  gallery.html  categories.html  detail.html  search.html
 ├── favorites.html  about.html  sponsor.html  submit.html  404.html
 ├── components/  css/  js/  data/  images/  _headers
 old/
-├── shuixian-deploy/         上一版部署版（含 Twitter 收录）
-└── shuixian-prompts/        本地开发版（完整数据 + 重分类脚本）
+├── shuixian-deploy/                     上一版部署版（含 Twitter 收录）
+└── shuixian-prompts/                    本地开发版（完整数据 + 重分类脚本）
 ```
 
 ## 数据
@@ -106,8 +106,8 @@ old/
 
 ```bash
 python -m http.server 8091 --directory old/shuixian-deploy
-python -m http.server 8092 --directory classic
-python -m http.server 8093 --directory modern
+python -m http.server 8092 --directory shuixian-deploy-classic
+python -m http.server 8093 --directory shuixian-deploy-modern
 ```
 
 ## 部署与缓存
@@ -122,7 +122,7 @@ python -m http.server 8093 --directory modern
 **改 CSS / JS / 组件后必须同时做两件事**，否则边缘节点会继续返回旧文件：
 
 1. 递增各 HTML 里的 `?v=` 与该版本 `js/base.js` 里的 `ASSET_VERSION`
-   （当前值：`classic` = `24`、`modern` = `2`、`old/shuixian-deploy` = `6`）
+   （当前值：`shuixian-deploy-classic` = `24`、`shuixian-deploy-modern` = `2`、`old/shuixian-deploy` = `6`）
 2. 部署完成后 Purge Cache，本地用 `Ctrl + Shift + R` 硬刷新确认
 
 ## 社区
