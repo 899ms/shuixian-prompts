@@ -157,5 +157,5 @@ python -m http.server 8093 --directory shuixian-deploy-modern
 
 ---
 
-> **署名要求**：fork 或使用请保留出处并链接回 [本仓库](https://github.com/BaYue-SYJ/shuixian-prompts)，衍生项目需写清来源；商用需先获授权。详见 [LICENSE](LICENSE)。
+> **项目授权要求**：fork 或使用请保留出处并链接回 [本仓库](https://github.com/BaYue-SYJ/shuixian-prompts)，衍生项目需写清来源；商用需先获授权。详见 [LICENSE](LICENSE)。
 
