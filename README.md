@@ -124,7 +124,26 @@ python -m http.server 8093 --directory shuixian-deploy-modern
 1. 递增各 HTML 里的 `?v=` 与该版本 `js/base.js` 里的 `ASSET_VERSION`
    （当前值：`shuixian-deploy-classic` = `24`、`shuixian-deploy-modern` = `2`、`old/shuixian-deploy` = `6`）
 2. 部署完成后 Purge Cache，本地用 `Ctrl + Shift + R` 硬刷新确认
+## 相关项目
 
+| 项目 | 说明 |
+|---|---|
+| [**shuixian-manju-skills**](https://github.com/BaYue-SYJ/shuixian-manju-skills) | 水仙的漫剧 6 件套：从小说到短剧成片的创作技能集（灵感来源于 shuohao-skills） |
+| [**shuixian-prompts**](https://github.com/BaYue-SYJ/shuixian-prompts) | 水仙的 AI 提示词画廊源码（公益提示词网站） |
+| [**zimeiti-workbuddy**](https://github.com/BaYue-SYJ/zimeiti-workbuddy) | Creator Buddy：公众号 / 小红书 / 短视频的全流程创作 Skill 工具箱 |
+| [**web-html-image-skill**](https://github.com/BaYue-SYJ/web-html-image-skill) | web-image：用 HTML/CSS 渲染出图，不依赖生图模型，32 套预设风格 |
+
+---
+
+## 关于作者
+
+如果这个东西帮你省了时间，可以请我喝杯咖啡 ☕；想直接聊也欢迎加微信。
+
+| 赞赏码 | 微信 | 公众号 |
+|:---:|:---:|:---:|
+| <img src="docs/reward-qr.jpg" width="180" alt="赞赏码"> | <img src="docs/wechat-qr.jpg" width="180" alt="微信"> | <img src="docs/wechat-mp-qr.jpg" width="180" alt="公众号"> |
+
+公众号会写一些 AI 工具与提示词相关的东西。
 ## 社区
 
 | [Linux.Do](https://linux.do) | Linux.Do /— 与社区分享、讨论和跟踪发展. | 认可 LINUX DO 社区 |
