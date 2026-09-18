@@ -6,7 +6,7 @@
 
 **在线站点：** <https://prompt.qqsrc.com/> · 纯静态站点，无需登录 · 收藏数据保存在本地浏览器
 
-**兼容模型：** ChatGPT（GPT-4o）· Grok · Gemini（Nano Banana）· Midjourney · Stable Diffusion · Flux · 即梦 · 可灵 · 豆包 · 海螺 · 文心一格
+**兼容模型：** ChatGPT· Grok · Gemini· Midjourney · Stable Diffusion · Flux · 即梦 · 可灵 · 豆包 · 海螺 · 文心一格等等
 
 ## 界面预览
 
