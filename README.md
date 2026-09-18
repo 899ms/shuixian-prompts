@@ -156,11 +156,11 @@ python -m http.server 8093 --directory shuixian-deploy-modern
 | --- | --- | --- |
 
 ---
-
-> **项目授权要求**：fork 或使用请保留出处并链接回 [本仓库](https://github.com/BaYue-SYJ/shuixian-prompts)，衍生项目需写清来源；商用需先获授权。详见 [LICENSE](LICENSE)。
-
 [![Star History Chart](https://api.star-history.com/svg?repos=BaYue-SYJ/shuixian-prompts&type=Date)](https://star-history.com/#BaYue-SYJ/shuixian-prompts&Date)
 
 ![stars](https://img.shields.io/github/stars/BaYue-SYJ/shuixian-prompts?style=social)
 ![forks](https://img.shields.io/github/forks/BaYue-SYJ/shuixian-prompts?style=social)
+> **项目授权要求**：fork 或使用请保留出处并链接回 [本仓库](https://github.com/BaYue-SYJ/shuixian-prompts)，衍生项目需写清来源；商用需先获授权。详见 [LICENSE](LICENSE)。
+
+
 
