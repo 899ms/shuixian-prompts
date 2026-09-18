@@ -53,4 +53,4 @@ scripts/
 serve_*.py
 start_*.bat
 sync_to_deploy.py
-shuixian-deploy/README.md
+old/shuixian-deploy/README.md

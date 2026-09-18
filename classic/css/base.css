@@ -1,0 +1,353 @@
+/* ===== 水仙的 AI 提示词 —— 公共样式 ===== */
+:root{
+  --blue:#2C8CAB; --blue-soft:#E3F4F8; --bg:#F7F7F7; --white:#FFFFFF;
+  --ink:#111111; --ink-2:#4A4A4A; --gray:#6B6B6B; --gray-2:#9AA0A6; --line:#EBEBEB;
+  --shadow:0 1px 8px rgba(123,174,191,.10);
+
+  /* ===== 79 子分类完整色板（按大类分色系，每子类独立色调） ===== */
+
+  /* --- 动漫二次元（粉紫系）--- */
+  --cat-动漫or二次元-bg:#F3DFF8; --cat-动漫or二次元-text:#9B4BA8; --cat-动漫or二次元-main:#C77DD4;
+  --cat-可爱动漫-bg:#FFE0F0; --cat-可爱动漫-text:#C85A7E; --cat-可爱动漫-main:#F28BB5;
+  --cat-角色板or三视图-bg:#E8D4F5; --cat-角色板or三视图-text:#7B4AA8; --cat-角色板or三视图-main:#A87ACC;
+  --cat-日漫艺术创作-bg:#F0E0FA; --cat-日漫艺术创作-text:#8A55AA; --cat-日漫艺术创作-main:#B88ADD;
+  --cat-其他动漫-bg:#F5E0EE; --cat-其他动漫-text:#A05A78; --cat-其他动漫-main:#CC82A2;
+  --cat-动漫个人海报-bg:#FAD6EF; --cat-动漫个人海报-text:#B04A80; --cat-动漫个人海报-main:#D97AAA;
+  --cat-动漫-bg:#EDD4F5; --cat-动漫-text:#8A4A9B; --cat-动漫-main:#B57AC8;
+  --cat-复古动漫-bg:#F8E0D8; --cat-复古动漫-text:#A86A50; --cat-复古动漫-main:#CC9070;
+  --cat-二次元动漫美女-bg:#FDE0F5; --cat-二次元动漫美女-text:#C04A88; --cat-二次元动漫美女-main:#EE7AAD;
+
+  /* --- 海报广告（暖橙系）--- */
+  --cat-9宫格-bg:#FCE8D5; --cat-9宫格-text:#B8742C; --cat-9宫格-main:#E89C4A;
+  --cat-城市海报-bg:#FDF0D8; --cat-城市海报-text:#A87A30; --cat-城市海报-main:#D4A040;
+  --cat-体育海报-bg:#FBE4CC; --cat-体育海报-text:#B06A20; --cat-体育海报-main:#E09048;
+  --cat-文字+人物海报-bg:#FFF0DC; --cat-文字+人物海报-text:#A07828; --cat-文字+人物海报-main:#CCA040;
+  --cat-电影封面-bg:#F8DCC8; --cat-电影封面-text:#A06838; --cat-电影封面-main:#CC9058;
+  --cat-多文字海报-bg:#FEF0D0; --cat-多文字海报-text:#987828; --cat-多文字海报-main:#C4A038;
+  --cat-东方文字海报-bg:#FFF2D0; --cat-东方文字海报-text:#907018; --cat-东方文字海报-main:#BC9830;
+  --cat-新媒体海报-bg:#F8E4D0; --cat-新媒体海报-text:#A06830; --cat-新媒体海报-main:#CC9860;
+  --cat-艺术女性海报-bg:#FCDDE8; --cat-艺术女性海报-text:#A85068; --cat-艺术女性海报-main:#D87898;
+  --cat-商业海报-bg:#F5E0D0; --cat-商业海报-text:#986838; --cat-商业-main:#C49060;
+  --cat-运动海报-bg:#FDE8D0; --cat-运动海报-text:#A87028; --cat-运动海报-main:#D49848;
+  --cat-饮料甜品海报-bg:#FDE8E0; --cat-饮料甜品海报-text:#A86838; --cat-饮料甜品-main:#D49060;
+
+  /* --- 人物写真（玫红/玫瑰系）--- */
+  --cat-高端女性杂志-bg:#FAD6E0; --cat-高端女性杂志-text:#9C4A62; --cat-高端女性杂志-main:#C96B87;
+  --cat-纯人物摄影-bg:#F8D0DC; --cat-纯人物摄影-text:#A04068; --cat-纯人物摄影-main:#D06890;
+  --cat-高端男性杂志-bg:#E8DCE8; --cat-高端男性杂志-text:#6A4A6A; --cat-高端男性杂志-main:#9A7AA8;
+  --cat-古风女生-bg:#F8DDE8; --cat-古风女生-text:#A05070; --cat-古风女生-main:#D080A0;
+  --cat-人物背景-bg:#EBDCE8; --cat-人物背景-text:#7A4A68; --cat-人物背景-main:#AA8098;
+  --cat-男性-bg:#E0E0F0; --cat-男性-text:#4A5A8A; --cat-男性-main:#7A8AC0;
+  --cat-多人合照-bg:#F0DCE8; --cat-多人合照-text:#8A4A68; --cat-多人合照-main:#B87A98;
+  --cat-真人日漫-bg:#E8D8E8; --cat-真人日漫-text:#704A70; --cat-真人日漫-main:#A07AA0;
+  --cat-时尚摄影-bg:#F0D8E4; --cat-时尚摄影-text:#904A70; --cat-时尚摄影-main:#C080A8;
+  --cat-证件照-bg:#EAE0EA; --cat-证件照-text:#6A4A6A; --cat-证件照-main:#9A7A9A;
+  --cat-情侣合照-bg:#F8E0EC; --cat-情侣合照-text:#985870; --cat-情侣合照-main:#C08898;
+
+  /* --- 插画艺术（青绿/薄荷系）--- */
+  --cat-手绘标注-bg:#D6F0E8; --cat-手绘标注-text:#3A8868; --cat-手绘标注-main:#5AB888;
+  --cat-人or物拆解-bg:#D8F0E0; --cat-人or物拆解-text:#4A8858; --cat-人or物拆解-main:#6AB878;
+  --cat-涂鸦画-bg:#D0F0E0; --cat-涂鸦画-text:#3A8860; --cat-涂鸦画-main:#5AB880;
+  --cat-治愈风格-bg:#D4F0EA; --cat-治愈风格-text:#3A8878; --cat-治愈风格-main:#5AB8A0;
+  --cat-手工剪纸-bg:#E0F0E0; --cat-手工剪纸-text:#4A8060; --cat-手工剪纸-main:#6AB080;
+  --cat-极简女生插画-bg:#DCF0F0; --cat-极简女生插画-text:#4A8078; --cat-极简女生插画-main:#6AB0A8;
+  --cat-中国古代-bg:#F0EAD8; --cat-中国古代-text:#8A7838; --cat-中国古代-main:#BAA858;
+  --cat-漫画-bg:#E8F0D8; --cat-漫画-text:#6A8838; --cat-漫画-main:#8AB858;
+  --cat-书画作品-bg:#F0E8D8; --cat-书画作品-text:#8A7830; --cat-书画作品-main:#BAA850;
+  --cat-复古报纸-bg:#EEE8DA; --cat-复古报纸-text:#7A7840; --cat-复古报纸-main:#AAA860;
+  --cat-油画or水彩-bg:#E0F0E4; --cat-油画or水彩-text:#4A8058; --cat-油画or水彩-main:#6AB078;
+  --cat-动漫插画-bg:#D8F0E8; --cat-动漫插画-text:#3A8868; --cat-动漫插画-main:#5AB888;
+  --cat-手绘人物涂鸦插画-bg:#D4F0E4; --cat-手绘人物涂鸦插画-text:#3A8860; --cat-手绘人物涂鸦插画-main:#5AB880;
+  --cat-撕纸照片框-bg:#E8F0E0; --cat-撕纸照片框-text:#5A8848; --cat-撕纸照片框-main:#7AB868;
+  --cat-涂鸦影子-bg:#D8F0EC; --cat-涂鸦影子-text:#3A8870; --cat-涂鸦影子-main:#5AB898;
+  --cat-构成主义-bg:#E8E8D8; --cat-构成主义-text:#6A6A38; --cat-构成主义-main:#8A8A58;
+
+  /* --- 其他/未归类（中性灰调）--- */
+  --cat-手写体-bg:#EDEDED; --cat-手写体-text:#5A5A5A; --cat-手写体-main:#7A7A7A;
+  --cat-直播画面-bg:#EBEBEB; --cat-直播画面-text:#565656; --cat-直播画面-main:#767676;
+  --cat-表情包-bg:#F0E8E8; --cat-表情包-text:#7A5A5A; --cat-表情包-main:#9A7A7A;
+  --cat-动物-bg:#E8F0E8; --cat-动物-text:#5A7A5A; --cat-动物-main:#7A9A7A;
+  --cat-腿比命长系列-bg:#F0EDE8; --cat-腿比命长系列-text:#6A6A5A; --cat-腿比命长系列-main:#8A8A7A;
+  --cat-搞怪-bg:#FFF0E0; --cat-搞怪-text:#A07830; --cat-搞怪-main:#CC9848;
+  --cat-logo-bg:#F0EDE8; --cat-logo-text:#6A6A52; --cat-logo-main:#8A8A72;
+  --cat-旅游攻略-bg:#E0ECF0; --cat-旅游攻略-text:#4A6A7A; --cat-旅游攻略-main:#6A8A9A;
+  --cat-美甲-bg:#F8E0F0; --cat-美甲-text:#905878; --cat-美甲-main:#B07898;
+  --cat-其他/未归类-bg:#E8E8E8; --cat-其他/未归类-text:#5A5A5A; --cat-其他/未归类-main:#8A8A8A;
+
+  /* --- 产品电商（草绿/柠檬系）--- */
+  --cat-美食产品海报-bg:#EDF5D8; --cat-美食产品海报-text:#6A8A2A; --cat-美食产品海报-main:#8AB84A;
+  --cat-女性产品海报-bg:#F8E0E8; --cat-女性产品海报-text:#905868; --cat-女性产品海报-main:#B07888;
+  --cat-餐饮产品设计-bg:#F0F0D8; --cat-餐饮产品设计-text:#6A8A3A; --cat-餐饮产品设计-main:#8ABA5A;
+  --cat-电子产品海报-bg:#E0ECF0; --cat-电子产品海报-text:#4A6A7A; --cat-电子产品海报-main:#6A8A9A;
+  --cat-冰箱贴-bg:#F0F0E0; --cat-冰箱贴-text:#6A8A4A; --cat-冰箱贴-main:#8ABA6A;
+
+  /* --- 游戏（紫罗兰系）--- */
+  --cat-英雄联盟-bg:#E8DEF5; --cat-英雄联盟-text:#5A4A9A; --cat-英雄联盟-main:#7A6ACA;
+  --cat-高达-bg:#E0D8F0; --cat-高达-text:#5048A0; --cat-高达-main:#7068C8;
+  --cat-卡牌栅格-bg:#EDE4F4; --cat-卡牌栅格-text:#5A4A92; --cat-卡牌栅格-main:#7A6AC2;
+  --cat-原神-bg:#E4DCF0; --cat-原神-text:#544A94; --cat-原神-main:#746AC4;
+  --cat-游戏-bg:#E8E0F4; --cat-游戏-text:#584A98; --cat-游戏-main:#786AB8;
+
+  /* --- （大凶）（深红/酒红系）--- */
+  --cat-大凶美女-bg:#F8D8E0; --cat-大凶美女-text:#A84058; --cat-大凶美女-main:#D86080;
+  --cat-不漏诱惑-bg:#FAD0DA; --cat-不漏诱惑-text:#B03560; --cat-不漏诱惑-main:#E05580;
+  --cat-古风大凶美女-bg:#F8D4DE; --cat-古风大凶美女-text:#A04060; --cat-古风大凶美女-main:#D86088;
+  --cat-二次元大凶美女-bg:#FAD8E4; --cat-二次元大凶美女-text:#A83868; --cat-二次元大凶美女-main:#E05890;
+  --cat-媚眼诱惑-bg:#FCDAE2; --cat-媚眼诱惑-text:#B04068; --cat-媚眼诱惑-main:#E06090;
+
+  /* --- 车辆机械3D（钢蓝系）--- */
+  --cat-车-bg:#D8E8F4; --cat-车-text:#3A6A8A; --cat-车-main:#5A8AB8;
+  --cat-汽车拆解-bg:#DCEAF2; --cat-汽车拆解-text:#406A88; --cat-汽车拆解-main:#608AA8;
+  --cat-3D-bg:#D4ECF0; --cat-3D-text:#308090; --cat-3D-main:#50A0B4;
+
+  /* --- 随手拍（青蓝系）--- */
+  --cat-随手拍-bg:#D4F0F8; --cat-随手拍-text:#2080A0; --cat-随手拍-main:#40A0C0;
+
+  /* --- 建筑空间场景（琥珀系）--- */
+  --cat-建筑or空间-bg:#F8F0D8; --cat-建筑or空间-text:#908030; --cat-建筑or空间-main:#B8A850;
+
+  /* --- 晓兰（金色系）--- */
+  --cat-晓兰-bg:#FDF0D0; --cat-晓兰-text:#A08020; --cat-晓兰-main:#C8A040;
+
+  /* --- 全部（品牌蓝）--- */
+  --cat-全部-bg:#E3F4F8; --cat-全部-text:#2C8CAB; --cat-全部-main:#2C8CAB;
+
+  /* --- 大类桶头（仅作备用，不单独渲染）--- */
+  --cat-动漫二次元-bg:#F3D0F5; --cat-动漫二次元-text:#9040A0; --cat-动漫二次元-main:#B860C8;
+  --cat-海报广告-bg:#FCE8CC; --cat-海报广告-text:#A06A20; --cat-海报广告-main:#D49440;
+  --cat-人物写真-bg:#F8D0E0; --cat-人物写真-text:#A04868; --cat-人物写真-main:#D07090;
+  --cat-插画艺术-bg:#D4F0E4; --cat-插画艺术-text:#388858; --cat-插画艺术-main:#58B878;
+  --cat-产品电商-bg:#E8F4D8; --cat-产品电商-text:#608A28; --cat-产品电商-main:#80BA48;
+  --cat-车辆机械3D-bg:#D4ECF2; --cat-车辆机械3D-text:#387894; --cat-车辆机械3D-main:#5898BC;
+  --cat-建筑空间场景-bg:#F8F0D8; --cat-建筑空间场景-text:#908030; --cat-建筑空间场景-main:#B8A850;
+  --cat-（大凶）-bg:#FADEE2; --cat-（大凶）-text:#A03858; --cat-（大凶）-main:#D05880;
+  --cat-大凶-bg:#FADEE2; --cat-大凶-text:#A03858; --cat-大凶-main:#D05880;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Noto Sans SC",-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; min-height:100vh;
+  display:flex; flex-direction:column;
+}
+.num{font-family:"DM Sans",sans-serif}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+a{color:inherit; text-decoration:none}
+main{flex:1}
+
+/* ---------- Header ---------- */
+.site-header{position:sticky;top:0;z-index:30;background:var(--white);border-bottom:1px solid var(--line)}
+.header-inner{max-width:1440px;margin:0 auto;height:72px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;flex:none}
+.brand-mark{width:28px;height:28px;display:block}
+.brand-name{font-size:18px;font-weight:700;color:var(--ink)}
+.nav{display:flex;align-items:center;gap:22px;flex:none}
+.nav a{font-size:15px;font-weight:500;color:var(--gray);text-decoration:none}
+.nav a:hover,.nav a.active{color:var(--blue)}
+#rewardLink{font-weight:600;color:var(--blue)}
+#rewardLink:hover{color:#247A96}
+.btn-fav{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--bg);color:var(--gray-2);transition:.15s}
+.btn-fav:hover,.btn-fav.active{background:var(--blue-soft);color:var(--blue)}
+.btn-submit{display:inline-flex;align-items:center;padding:8px 18px;border-radius:9999px;background:var(--blue);color:var(--white);font-size:14px;font-weight:500}
+.nav-toggle{display:none;flex:none;width:40px;height:40px;align-items:center;justify-content:center;gap:5px;flex-direction:column;background:transparent;border:1px solid var(--line);border-radius:10px;cursor:pointer;padding:0}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--ink);border-radius:1px;transition:.2s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ---------- Gallery search ---------- */
+.gallery-search{width:320px;max-width:100%;height:40px;padding:0 16px;border-radius:20px;background:var(--white);border:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.gallery-search svg{flex:none;color:var(--gray-2)}
+.gallery-search input{flex:1;border:none;outline:none;font-size:14px;background:transparent;color:var(--ink)}
+.gallery-search input::placeholder{color:var(--gray-2)}
+
+/* ---------- Page Title ---------- */
+.page-title{padding:32px 48px 0; max-width:1440px;margin:0 auto;width:100%}
+.kicker-sm{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;font-size:15px;color:var(--blue);letter-spacing:.5px;margin:0 0 8px}
+.page-title h1{margin:0;font-size:32px;font-weight:700;line-height:1.2;color:var(--ink)}
+.page-title .sub{margin:8px 0 0;font-size:15px;font-weight:400;line-height:1.6;color:var(--ink-2);max-width:640px}
+
+/* ---------- Chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.chip{padding:8px 16px;border-radius:9999px;background:var(--white);border:1px solid transparent;font-size:13px;font-weight:500;color:var(--gray);transition:.15s;white-space:nowrap}
+.chip:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.chip.active{color:#fff !important}
+
+.filter-chip{padding:7px 15px;border-radius:9999px;background:var(--bg);border:1px solid var(--line);font-size:13px;font-weight:500;color:var(--gray-2);transition:.15s}
+.filter-chip:hover{border-color:var(--blue);color:var(--blue)}
+.filter-chip.active{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* ---------- Gallery Layout ---------- */
+.gallery{max-width:1440px;margin:0 auto;padding:24px 48px 64px;display:flex;flex-direction:column;gap:24px}
+.gallery-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.gallery-title{font-size:28px;font-weight:700;color:var(--ink);margin:0}
+.gallery-title span{color:var(--gray);font-size:18px;font-weight:500;margin-left:8px}
+.view-all-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:var(--blue);transition:.15s}
+.view-all-link:hover{gap:10px}
+.view-all-link svg{flex:none}
+.gallery-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* ---------- Sort ---------- */
+.sort-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:9999px;background:var(--white);border:1px solid var(--line);font-size:14px;font-weight:500;color:var(--gray)}
+.sort-menu{position:relative}
+.sort-list{position:absolute;right:0;top:calc(100% + 6px);background:var(--white);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;min-width:140px;display:none;z-index:10}
+.sort-list.show{display:block}
+.sort-list button{display:block;width:100%;text-align:left;padding:10px 16px;font-size:14px;color:var(--ink)}
+.sort-list button:hover{background:var(--blue-soft)}
+.sort-list button.sel{color:var(--blue);font-weight:500}
+
+/* ---------- Grid & Card ---------- */
+.grid{columns:248px;column-gap:20px}
+.grid .card,.grid .home-card{break-inside:avoid;-webkit-column-break-inside:avoid;margin:0 0 20px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:hidden;padding:12px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:.18s;position:relative}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.thumb-wrap{position:relative;width:100%;border-radius:12px;overflow:hidden;background:#eef2f4;flex:none}
+.card .thumb-wrap{aspect-ratio:auto;height:auto}
+.card .thumb,.card .thumb-wrap>img{width:100%;height:auto;border-radius:12px;display:block;background:#eef2f4}
+.card .thumb-ph{width:100%;min-height:200px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#eaf4f7,#dfeef2);color:var(--gray-2);font-size:13px}
+.card .badge{position:absolute;top:20px;right:20px;z-index:2;display:inline-flex;align-items:center;gap:4px;background:rgba(14,20,25,.62);color:#fff;font-size:12px;font-weight:600;line-height:1;padding:5px 9px;border-radius:999px;backdrop-filter:blur(2px);pointer-events:none}
+.card .cap{font-size:15px;font-weight:500;color:var(--ink);line-height:1.4;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.card .meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card .likes{display:inline-flex;align-items:center;gap:3px;font-size:12px;color:var(--gray);font-family:"DM Sans",sans-serif}
+.card .likes svg{width:12px;height:12px}
+.card .cat-chip{font-size:11px;font-weight:500;padding:3px 8px;border-radius:999px}
+.tag-pill{font-size:11px;font-weight:500;padding:2px 8px;border-radius:999px;background:var(--blue-soft);color:var(--blue)}
+
+/* 画廊增强 */
+.card .fav-star{position:absolute;top:10px;left:10px;z-index:3;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--gray-2);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.12);transition:.15s}
+.card .fav-star:hover,.card .fav-star.active{color:var(--blue);background:#fff}
+.card .actions{position:absolute;inset:10px;border-radius:12px;background:rgba(14,20,25,.48);display:flex;align-items:center;justify-content:center;gap:10px;opacity:0;pointer-events:none;transition:.2s;z-index:4}
+.card:hover .actions{opacity:1;pointer-events:auto}
+.actions .act-btn{padding:8px 14px;border-radius:9999px;font-size:13px;font-weight:500;background:var(--white);color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.actions .act-btn.primary{background:var(--blue);color:#fff}
+.actions .act-btn:hover{transform:translateY(-1px)}
+
+.sentinel{height:1px}
+.empty{padding:60px 0;text-align:center;color:var(--gray-2);font-size:15px}
+.loading{padding:80px 0;text-align:center;color:var(--gray);font-size:15px}
+/* 渐进式搜索提示条：完整数据后台加载时显示一行说明，避免用户以为卡死 */
+.search-tip{display:none;align-items:center;gap:8px;margin:0 0 14px;padding:9px 14px;border-radius:10px;
+  background:var(--blue-soft);color:var(--blue);font-size:13px;font-weight:600}
+.search-tip .sp{width:14px;height:14px;border:2px solid var(--blue);border-top-color:transparent;border-radius:50%;
+  animation:spin .7s linear infinite;flex:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.show-more{align-self:center;margin:4px auto 0;display:inline-flex;align-items:center;gap:8px;padding:12px 34px;border-radius:9999px;background:var(--white);border:1px solid var(--line);font-size:15px;font-weight:500;color:var(--blue);transition:.15s}
+.show-more:hover{border-color:var(--blue);background:var(--blue-soft)}
+.show-more:active{transform:scale(.98)}
+
+/* ---------- 分类页 ---------- */
+.filter-group{display:flex;flex-direction:column;gap:14px;background:var(--white);border:1px solid var(--line);border-radius:16px;padding:18px 20px;max-width:1440px;margin:0 48px}
+.filter-row{display:flex;gap:14px;align-items:flex-start;min-width:0}
+.filter-label{flex:none;font-size:14px;font-weight:700;color:var(--ink);line-height:32px;width:42px}
+.filter-row .chips{flex:1;min-width:0}
+
+/* ---------- 收藏页 ---------- */
+.fav-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:0 48px;max-width:1440px;margin:0 auto}
+.board-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.board-tab{padding:7px 15px;border-radius:9999px;background:var(--white);border:1px solid var(--line);font-size:13px;font-weight:500;color:var(--gray);transition:.15s}
+.board-tab:hover{border-color:var(--blue);color:var(--blue)}
+.board-tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.board-new,.export-btn{padding:7px 15px;border-radius:9999px;background:var(--white);border:1px solid var(--line);font-size:13px;font-weight:500;color:var(--ink)}
+.board-new:hover,.export-btn:hover{border-color:var(--blue);color:var(--blue)}
+
+/* ---------- Footer ---------- */
+.site-footer{background:var(--white);border-top:1px solid var(--line);height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;max-width:1440px;margin:0 auto;width:100%}
+.footer-brand{font-size:16px;font-weight:700;color:var(--ink)}
+.footer-copy{font-size:14px;color:var(--gray-2)}
+
+/* ---------- Lightbox ---------- */
+.mask{position:fixed;inset:0;background:#0E1419;display:none;z-index:60;align-items:center;justify-content:center;padding:24px}
+.mask.show{display:flex}
+.lightbox{width:1040px;max-width:100%;max-height:90vh;height:640px;background:var(--white);border-radius:20px;overflow:hidden;display:flex}
+.lb-img{width:520px;flex:none;background:#0E1419;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.lb-img img{max-width:100%;max-height:100%;object-fit:contain;transition:opacity .18s ease}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;background:rgba(255,255,255,.85);color:#111;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.25);transition:.15s;opacity:.92;user-select:none}
+.lb-nav:hover{background:#fff;opacity:1}
+.lb-nav:active{transform:translateY(-50%) scale(.94)}
+.lb-prev{left:14px}
+.lb-next{right:14px}
+.lb-count{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:rgba(14,20,25,.62);color:#fff;font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px;letter-spacing:.5px;pointer-events:none}
+.lb-loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(14,20,25,.55);color:rgba(255,255,255,.9);font-size:14px;letter-spacing:.5px;padding:8px 16px;border-radius:999px;pointer-events:none;z-index:3;display:none}
+.lb-loading.show{display:block}
+.lb-body{flex:1;padding:32px;display:flex;flex-direction:column;gap:16px;overflow:auto}
+.lb-top{display:flex;align-items:center;justify-content:space-between}
+.lb-top .lbl{font-size:13px;font-weight:500;color:var(--gray-2)}
+.lb-close{width:24px;height:24px;cursor:pointer}
+.lb-title{font-size:24px;font-weight:700;color:var(--ink);line-height:1.3}
+.prompt-lbl{font-family:"DM Sans",sans-serif;font-size:12px;font-weight:500;color:var(--blue);letter-spacing:1px}
+.prompt-txt{font-size:15px;line-height:1.6;color:#333;white-space:pre-wrap;word-break:break-word}
+.lb-actions{display:flex;align-items:center;gap:16px;margin-top:auto}
+.copy-btn{display:inline-flex;align-items:center;padding:12px 20px;border-radius:10px;background:var(--blue);color:var(--white);font-size:15px;font-weight:500}
+.view-link{font-size:14px;font-weight:500;color:var(--blue);text-decoration:none}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%) translateY(20px);background:rgba(17,17,17,.92);color:#fff;padding:10px 20px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:80}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- Modals ---------- */
+.qr-mask,.about-mask,.reward-mask,.board-mask{align-items:center;justify-content:center}
+.qr-card,.about-card,.reward-card,.board-card{position:relative;width:340px;max-width:90vw;background:var(--white);border-radius:20px;padding:32px 28px 28px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 12px 40px rgba(14,20,25,.28)}
+.about-card{width:420px;text-align:center}
+.reward-card{width:460px;text-align:left;align-items:flex-start}
+.board-card{width:360px}
+.modal-close{position:absolute;top:14px;right:16px;font-size:24px;line-height:1;color:var(--gray-2);width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.modal-close:hover{color:var(--ink)}
+.modal-title{margin:0;font-size:20px;font-weight:700;color:var(--ink)}
+.qr-img{width:220px;height:220px;border-radius:12px;background:var(--white);box-shadow:var(--shadow);object-fit:cover}
+.qr-tip{margin:0;font-size:14px;line-height:1.6;color:var(--gray);text-align:center}
+.about-text{margin:0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+.about-text b{color:var(--blue);font-weight:600}
+.about-qr{width:200px;height:200px;border-radius:12px;background:var(--white);box-shadow:var(--shadow);object-fit:cover}
+.about-copy{margin:0;font-size:13px;color:var(--gray-2)}
+.reward-text{margin:0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+.reward-qr{width:200px;height:200px;border-radius:12px;background:var(--white);box-shadow:var(--shadow);object-fit:cover;align-self:center}
+.reward-list{margin:0;padding-left:18px;font-size:14px;line-height:1.8;color:var(--ink-2)}
+.reward-list li{margin-bottom:6px}
+.reward-list li::marker{color:var(--blue)}
+.reward-copy{margin:0;font-size:13px;color:var(--gray-2);align-self:center}
+.board-form{width:100%;display:flex;flex-direction:column;gap:12px}
+.board-form input{width:100%;height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);font-size:15px;outline:none}
+.board-form input:focus{border-color:var(--blue)}
+.board-form .board-actions{display:flex;justify-content:flex-end;gap:10px}
+.board-form button{padding:8px 18px;border-radius:8px;font-size:14px;font-weight:500}
+.board-form .cancel{background:var(--bg);color:var(--ink)}
+.board-form .save{background:var(--blue);color:#fff}
+
+/* ---------- responsive ---------- */
+@media(max-width:920px){
+  .header-inner{height:64px;padding:0 20px;gap:14px;position:relative}
+  .brand-name{font-size:16px}
+  .nav-toggle{display:flex}
+  .nav{display:none;position:absolute;top:100%;right:20px;left:20px;flex-direction:column;align-items:stretch;gap:0;background:var(--white);border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.12);padding:10px;margin-top:8px;z-index:40}
+  .nav.open{display:flex}
+  .nav a,.nav .btn-submit{display:flex;align-items:center;padding:12px 16px;font-size:15px;border-radius:10px}
+  .nav a:hover,.nav a.active{background:var(--blue-soft);color:var(--blue)}
+  .nav .btn-submit{margin:4px 0 0;text-align:center;justify-content:center}
+  .gallery-search{width:auto;flex:1;max-width:100%;height:40px}
+  .page-title{padding:24px 20px 0}
+  .page-title h1{font-size:28px}
+  .gallery{padding:20px 20px 48px}
+  .filter-group{margin:0 20px}
+  .filter-row{flex-direction:column;gap:10px;align-items:flex-start}
+  .filter-label{line-height:1.4;width:auto}
+  .fav-bar{padding:0 20px}
+  .grid{columns:200px;column-gap:16px}
+  .grid .card,.grid .home-card{margin-bottom:16px}
+  .site-footer{padding:0 20px}
+}
+@media(max-width:768px){
+  .gallery-search{width:100%}
+  .gallery-search{width:100%}
+  .grid{columns:200px;column-gap:16px}
+  .gallery-head .view-all-link{display:none}
+  .lightbox{flex-direction:column;height:auto;max-height:92vh}
+  .lb-img{width:100%;height:240px}
+  .site-footer{height:auto;padding:20px;flex-direction:column;gap:8px;text-align:center}
+}
+@media(max-width:480px){
+  .grid{columns:150px;column-gap:14px}
+  .grid .card,.grid .home-card{margin-bottom:14px}
+  .card .actions{display:none}
+  .gallery{padding:16px 16px 40px}
+  .fav-bar{flex-direction:column;align-items:flex-start}
+}
