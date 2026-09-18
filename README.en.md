@@ -6,6 +6,8 @@
 
 **Live site:** <https://prompt.qqsrc.com/> · Fully static, no login required · Favorites are kept in your browser
 
+**Works with:** ChatGPT (GPT-4o) · Grok · Gemini (Nano Banana) · Midjourney · Stable Diffusion · Flux · Jimeng (即梦) · Kling (可灵) · Doubao (豆包) · Hailuo (海螺) · Wenxin Yige (文心一格)
+
 ## Preview
 
 ### classic — the 12-category / 79-subcategory skin
