@@ -131,7 +131,7 @@ python -m http.server 8093 --directory shuixian-deploy-modern
 | 项目 | 说明 |
 |---|---|
 | [**shuixian-manju-skills**](https://github.com/BaYue-SYJ/shuixian-manju-skills) | 水仙的漫剧 6 件套：从小说到短剧成片的创作技能集（灵感来源于 shuohao-skills） |
-| [**shuixian-threads-ai-radar**](https://github.com/BaYue-SYJ/threads-ai-radar) | 水仙的threads 爆款搜集源码（公益提示词网站） |
+| [**shuixian-threads-ai-radar**](https://github.com/BaYue-SYJ/threads-ai-radar) | 水仙的threads 爆款搜集源码 |
 | [**zimeiti-workbuddy**](https://github.com/BaYue-SYJ/zimeiti-workbuddy) | Creator Buddy：公众号 / 小红书 / 短视频的全流程创作 Skill 工具箱 |
 | [**web-html-image-skill**](https://github.com/BaYue-SYJ/web-html-image-skill) | web-image：用 HTML/CSS 渲染出图，不依赖生图模型，32 套预设风格 |
 
