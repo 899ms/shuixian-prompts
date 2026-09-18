@@ -136,9 +136,7 @@ python -m http.server 8093 --directory shuixian-deploy-modern
 | [**web-html-image-skill**](https://github.com/BaYue-SYJ/web-html-image-skill) | web-image：用 HTML/CSS 渲染出图，不依赖生图模型，32 套预设风格 |
 
 ---
-## 公众号会经常写一些 AI 工具与提示词相关的东西。
-如果需要加入公益免费交流群，可以加我VX:Kas2026  
-做的都是公益的不收取任何费用，喜欢技术的可以一起交流。
+
 
 ## 关于作者
 
@@ -147,7 +145,9 @@ python -m http.server 8093 --directory shuixian-deploy-modern
 | 赞赏码 | 微信 | 公众号 |
 |:---:|:---:|:---:|
 | <img src="docs/reward-qr.jpg" width="180" alt="赞赏码"> | <img src="docs/wechat-qr.jpg" width="180" alt="微信"> | <img src="docs/wechat-mp-qr.jpg" width="180" alt="公众号"> |
-
+## 公众号会经常写一些 AI 工具与提示词相关的东西。
+如果需要加入公益免费交流群，可以加我VX:Kas2026  
+做的都是公益的不收取任何费用，喜欢技术的可以一起交流。
 
 ## 社区
 
