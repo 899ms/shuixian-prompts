@@ -2,7 +2,7 @@
 
 [简体中文](README.md) · **English**
 
-> Two AI prompt datasets + three front-end skins. Browse by category or keyword, open any entry for the full-size image, copy the prompt in one click.
+> One merged site (modern / classic skins, switchable in one click) plus the full prompt dataset. Browse by category or keyword, open any entry for the full-size image, copy the prompt in one click.
 
 **Live site:** <https://prompt.qqsrc.com/> · Fully static, no login required · Favorites are kept in your browser
 
@@ -10,7 +10,21 @@
 
 ## Preview
 
-### classic — the 12-category / 79-subcategory skin
+### unified — the current version: two skins, one click apart
+
+`shuixian-unified/` merges the two skins into a single site: **modern** splits every view into its own page (detail / search / categories / about / submit), while **classic** is the "pick a topic and wander" card wall. A button in the header switches between them, and both share the same dataset.
+
+| Modern home | Click the header button to switch to classic |
+| --- | --- |
+| ![unified modern home](docs/screenshots/unified/home-modern.png) | ![switch to classic](docs/screenshots/unified/switch-to-classic.png) |
+
+| Classic home | Click again to switch back to modern |
+| --- | --- |
+| ![unified classic home](docs/screenshots/unified/home-classic.png) | ![switch back to modern](docs/screenshots/unified/switch-to-modern.png) |
+
+> **How the switch works**: it stays on the same kind of page when it can — home↔home, gallery↔gallery, favorites↔favorites — and falls back to the other skin's home page otherwise. Both skins use the site accent `#2B8AAB`, and each remembers its own light/dark preference.
+
+### classic — the 12-category / 79-subcategory skin (archived under `old/`)
 
 | Home | Gallery |
 | --- | --- |
@@ -20,7 +34,7 @@
 | --- |
 | ![classic category filter](docs/screenshots/classic/category.png) |
 
-### modern — the page-per-view skin
+### modern — the page-per-view skin (archived under `old/`)
 
 | Home | Gallery (category tree on the left) |
 | --- | --- |
@@ -30,7 +44,7 @@
 | --- |
 | ![modern detail](docs/screenshots/modern/detail.png) |
 
-### old/shuixian-deploy — the previous live site
+### old/shuixian-deploy — an earlier live site (includes the Twitter collection)
 
 | Home | Gallery |
 | --- | --- |
@@ -42,34 +56,35 @@
 
 | Directory | Prompts | Images | Pages | What it is |
 | --- | ---: | ---: | ---: | --- |
-| `shuixian-deploy-classic/` | 5,452 | 7,386 | 4 | The classic skin with 12 categories / 79 subcategories — "pick a topic and wander around" |
-| `shuixian-deploy-modern/` | 5,452 | 5,452 | 10 | One page per view (detail / search / categories / about / sponsor / submit / 404), with the leanest data schema |
-| `old/shuixian-deploy/` | 17,427 | 19,827 | 4 | The previous live site, plus a Twitter-collected layer (3,948 entries), editorial gallery skin |
+| `shuixian-unified/` | 5,452 | 5,452 | 13 | **The current merged build**: 9 modern pages + 4 classic pages (in the `classic/` subdirectory), one header button switches between the skins, both share one dataset |
+| `old/shuixian-deploy-modern/` | 5,452 | 5,452 | 10 | The modern skin before the merge (one page per view), archived |
+| `old/shuixian-deploy-classic/` | 5,452 | 7,386 | 4 | The classic skin before the merge (12 categories / 79 subcategories), archived |
+| `old/shuixian-deploy/` | 17,427 | 19,827 | 4 | An earlier live site, plus a Twitter-collected layer (3,948 entries), editorial gallery skin |
 | `old/shuixian-prompts/` | 17,427 | — | 4 | Local development copy of the same dataset; images are not committed (see "Image hosting") |
 
-> `shuixian-deploy-classic/` and `shuixian-deploy-modern/` share the same 5,452 prompts; they differ in information architecture and skin.
-> The two directories under `old/` share the 17,427-prompt dataset; they differ in whether an image folder is present and whether the folder is meant as a deployable bundle.
+> `shuixian-unified/`, `old/shuixian-deploy-modern/` and `old/shuixian-deploy-classic/` all use the same 5,452 prompts;
+> the first two were merged into `shuixian-unified/` and are kept under `old/` for history only.
+> The other two directories under `old/` share the 17,427-prompt dataset; they differ in whether an image folder is present and whether the folder is meant as a deployable bundle.
 
 ## Repository layout
 
 ```
-README.md  README.en.md
-docs/screenshots/                        Screenshots of all three versions
-shuixian-deploy-classic/                 Skin with 12 categories / 79 subcategories (deployable on its own)
-├── index.html  gallery.html  classify.html  favorites.html
-├── components/                          header / footer / lightbox / modals (injected by JS)
-├── css/base.css                         All site styles
-├── js/base.js                           Shared script: data loading, cards, lightbox, favorites
-├── js/{home,gallery,classify,favorites}.js
-├── data/                                Dataset
-├── images/                              2 WeChat QR codes
-└── _headers                             Cloudflare Pages caching rules
-shuixian-deploy-modern/                  Page-per-view skin (deployable on its own)
+README.md  README.en.md  LICENSE
+docs/screenshots/                        Screenshots of all four versions
+shuixian-unified/                        The current merged build (deployable on its own)
 ├── index.html  gallery.html  categories.html  detail.html  search.html
 ├── favorites.html  about.html  sponsor.html  submit.html  404.html
-├── components/  css/  js/  data/  images/  _headers
+├── classic/                             Classic skin (subdirectory, shares the same data/)
+│   ├── index.html  gallery.html  classify.html  favorites.html
+│   └── components/  css/  js/  images/
+├── components/  css/  js/               Modern skin
+├── data/                                Dataset (shared by both skins)
+├── images/                              2 WeChat QR codes
+└── _headers                             Cloudflare Pages caching rules
 old/
-├── shuixian-deploy/                     Previous deployable build (includes the Twitter collection)
+├── shuixian-deploy-modern/              Modern skin before the merge (archived, deployable on its own)
+├── shuixian-deploy-classic/             Classic skin before the merge (archived, deployable on its own)
+├── shuixian-deploy/                     Earlier deployable build (includes the Twitter collection)
 └── shuixian-prompts/                    Local dev copy (full dataset + re-categorisation scripts)
 ```
 
@@ -81,7 +96,7 @@ Each version ships its own `data/` folder and loads it in two layers: a lightwei
 | --- | --- |
 | `data/list.part1~3.json` | Lightweight list (title, category, likes, image path) — loaded on first paint |
 | `data/prompts.part1~3.json` | Full records (including the `prompt` body) — loaded on demand |
-| `data/categories.json` / `data/meta.json` | Category structure (`classic` uses a flat map, `modern` uses a major → subcategory tree) |
+| `data/categories.json` / `data/meta.json` | Category structure (the classic skin uses a flat map, the modern skin a major → subcategory tree) |
 | `data/list-twitter.json` `data/prompts-twitter.json` | Twitter collection (only `old/shuixian-deploy` carries data) |
 | `data/twitter_manifest.json` | Lists the Twitter shard files |
 
@@ -90,8 +105,8 @@ Fields get leaner with each version:
 | Version | Fields |
 | --- | --- |
 | `old/shuixian-deploy` | `id` `title` `prompt` `image` `images` `category` `likes` `author` `slug` `resultsCount` `thumb` `tweet` |
-| `classic` | Same as above, plus `themes` `styles` `person` |
-| `modern` | `id` `title` `prompt` `image` `category` `likes` |
+| classic skin (`shuixian-unified/classic`, `old/shuixian-deploy-classic`) | Same as above, plus `themes` `styles` `person` |
+| modern skin (`shuixian-unified`, `old/shuixian-deploy-modern`) | `id` `title` `prompt` `image` `category` `likes` |
 
 ## Image hosting: why images are not in git
 
@@ -108,10 +123,13 @@ Each version's `images/` folder holds only 2 WeChat QR codes, which the site its
 Run one port per version to compare them side by side. All of them must be served over HTTP — opening the HTML files directly is blocked by `fetch`'s cross-origin rules:
 
 ```bash
+python -m http.server 8094 --directory shuixian-unified
 python -m http.server 8091 --directory old/shuixian-deploy
-python -m http.server 8092 --directory shuixian-deploy-classic
-python -m http.server 8093 --directory shuixian-deploy-modern
+python -m http.server 8092 --directory old/shuixian-deploy-classic
+python -m http.server 8093 --directory old/shuixian-deploy-modern
 ```
+
+Open <http://localhost:8094/> for the merged build, then use the «经典版 / 现代版» button in the header to switch skins.
 
 ## Deployment and caching
 
@@ -125,8 +143,13 @@ The caching rules in `_headers`:
 **After changing CSS / JS / components you must do two things**, otherwise edge nodes keep serving the old files:
 
 1. Bump the `?v=` in each HTML file and `ASSET_VERSION` in that version's `js/base.js`
-   (current values: `shuixian-deploy-classic` = `24`, `shuixian-deploy-modern` = `2`, `old/shuixian-deploy` = `6`)
+   (current values: `shuixian-unified` modern = `2`, its `classic/` subdirectory = `24`,
+   `old/shuixian-deploy-modern` = `2`, `old/shuixian-deploy-classic` = `24`, `old/shuixian-deploy` = `6`)
 2. Purge the cache after deploying, then hard-refresh locally with `Ctrl + Shift + R`
+
+> **Deploying the merged build**: drag the whole `shuixian-unified/` folder into Cloudflare Pages — it is self-contained,
+> including the `classic/` subdirectory. If your Pages project was pointed at a subdirectory such as `shuixian-deploy-modern`
+> before, update it to `shuixian-unified`.
 
 ## Related projects
 

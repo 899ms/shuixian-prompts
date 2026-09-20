@@ -2,7 +2,7 @@
 
 **简体中文** · [English](README.en.md)
 
-> 两套 AI 提示词数据集 + 三套前端皮肤：按分类或关键词即搜即得，点开看大图，一键复制提示词。
+> 合并版站点（现代 / 经典两套皮肤一键切换）+ 完整提示词数据集：按分类或关键词即搜即得，点开看大图，一键复制提示词。
 
 **在线站点：** <https://prompt.qqsrc.com/> · 纯静态站点，无需登录 · 收藏数据保存在本地浏览器
 
@@ -10,7 +10,22 @@
 
 ## 界面预览
 
-### classic —— 12 大类 / 79 细类皮肤
+### unified —— 现役版：两套皮肤一键切换
+
+`shuixian-unified/` 把原先的两套皮肤合进了一个站点：**现代版**是页面级拆分（详情 / 搜索 / 分类 / 关于 / 投稿各自独立），**经典版**是「12 大类慢慢逛」的卡片墙。右上角一个按钮来回切，共用同一份数据。
+
+| 现代版首页 | 点右上角切到经典版 |
+| --- | --- |
+| ![unified 现代版首页](docs/screenshots/unified/home-modern.png) | ![切换到经典版](docs/screenshots/unified/switch-to-classic.png) |
+
+| 经典版首页 | 点右上角切回现代版 |
+| --- | --- |
+| ![unified 经典版首页](docs/screenshots/unified/home-classic.png) | ![切回现代版](docs/screenshots/unified/switch-to-modern.png) |
+
+> **切换规则**：会尽量停在同一类页面上 —— 首页↔首页、画廊↔画廊、收藏↔收藏；目标版本没有对应页面时回到该版首页。
+> 两套皮肤的主题色都取自站点 `#2B8AAB`，深浅色主题也跟着各自记住。
+
+### classic —— 12 大类 / 79 细类皮肤（已归档至 `old/`）
 
 | 首页 | 画廊 |
 | --- | --- |
@@ -20,7 +35,7 @@
 | --- |
 | ![classic 分类筛选](docs/screenshots/classic/category.png) |
 
-### modern —— 页面级拆分皮肤
+### modern —— 页面级拆分皮肤（已归档至 `old/`）
 
 | 首页 | 画廊（左侧分类树） |
 | --- | --- |
@@ -30,7 +45,7 @@
 | --- |
 | ![modern 详情](docs/screenshots/modern/detail.png) |
 
-### old/shuixian-deploy —— 上一版线上站点
+### old/shuixian-deploy —— 更早一版线上站点（含 Twitter 收录）
 
 | 首页 | 画廊 |
 | --- | --- |
@@ -38,38 +53,40 @@
 | **提示词详情** | **分类筛选** |
 | ![旧版详情](docs/screenshots/old/lightbox.png) | ![旧版分类](docs/screenshots/old/classify.png) |
 
-## 三个版本对照
+## 版本对照
 
 | 目录 | 提示词 | 图片 | 页面 | 定位 |
 | --- | ---: | ---: | ---: | --- |
-| `shuixian-deploy-classic/` | 5,452 | 7,386 | 4 | 12 大类 / 79 细类的经典皮肤，「挑一个主题慢慢逛」 |
-| `shuixian-deploy-modern/` | 5,452 | 5,452 | 10 | 页面级拆分（详情 / 搜索 / 全部分类 / 关于 / 赞赏 / 投稿 / 404），数据结构最精简 |
-| `old/shuixian-deploy/` | 17,427 | 19,827 | 4 | 上一版线上站点，多一层 Twitter 收录（3,948 条），编辑式画廊皮肤 |
+| `shuixian-unified/` | 5,452 | 5,452 | 13 | **现役合并版**：现代版 9 页 + 经典版 4 页（`classic/` 子目录），右上角一键切换，共用一份数据 |
+| `old/shuixian-deploy-modern/` | 5,452 | 5,452 | 10 | 合并前的现代版（页面级拆分），已归档 |
+| `old/shuixian-deploy-classic/` | 5,452 | 7,386 | 4 | 合并前的经典版（12 大类 / 79 细类），已归档 |
+| `old/shuixian-deploy/` | 17,427 | 19,827 | 4 | 更早一版线上站点，多一层 Twitter 收录（3,948 条），编辑式画廊皮肤 |
 | `old/shuixian-prompts/` | 17,427 | — | 4 | 同一套数据的本地开发版，图片不入库（见「图片托管」） |
 
-> `shuixian-deploy-classic/` 与 `shuixian-deploy-modern/` 共用同一套 5,452 条提示词，差别在信息架构与皮肤；
-> `old/` 下两个目录共用 17,427 条那套数据，差别在「是否含图片目录、是否作为部署包」。
+> `shuixian-unified/`、`old/shuixian-deploy-modern/`、`old/shuixian-deploy-classic/` 用的是同一套 5,452 条提示词，
+> 差别在信息架构与皮肤 —— 前两个版本已经合进 `shuixian-unified/`，留在 `old/` 只是为了保留历史。
+> `old/` 下另外两个目录共用 17,427 条那套数据，差别在「是否含图片目录、是否作为部署包」。
 
 ## 仓库结构
 
 ```
 README.md
-docs/screenshots/                        三个版本的界面截图
-shuixian-deploy-classic/                 12 大类 / 79 细类皮肤（可独立部署）
-├── index.html  gallery.html  classify.html  favorites.html
-├── components/                          header / footer / lightbox / modals（JS 动态注入）
-├── css/base.css                         全站样式
-├── js/base.js                           公共脚本：数据加载、卡片、灯箱、收藏
-├── js/{home,gallery,classify,favorites}.js
-├── data/                                数据集
-├── images/                              2 张公众号二维码
-└── _headers                             Cloudflare Pages 缓存策略
-shuixian-deploy-modern/                  页面级拆分皮肤（可独立部署）
+LICENSE
+docs/screenshots/                        四个版本的界面截图
+shuixian-unified/                        现役合并版（可独立部署）
 ├── index.html  gallery.html  categories.html  detail.html  search.html
 ├── favorites.html  about.html  sponsor.html  submit.html  404.html
-├── components/  css/  js/  data/  images/  _headers
+├── classic/                             经典版皮肤（子目录，与主站共用同一份 data/）
+│   ├── index.html  gallery.html  classify.html  favorites.html
+│   └── components/  css/  js/  images/
+├── components/  css/  js/               现代版皮肤
+├── data/                                数据集（两套皮肤共用）
+├── images/                              2 张公众号二维码
+└── _headers                             Cloudflare Pages 缓存策略
 old/
-├── shuixian-deploy/                     上一版部署版（含 Twitter 收录）
+├── shuixian-deploy-modern/              合并前的现代版（已归档，可独立部署）
+├── shuixian-deploy-classic/             合并前的经典版（已归档，可独立部署）
+├── shuixian-deploy/                     更早的部署版（含 Twitter 收录）
 └── shuixian-prompts/                    本地开发版（完整数据 + 重分类脚本）
 ```
 
@@ -81,7 +98,7 @@ old/
 | --- | --- |
 | `data/list.part1~3.json` | 轻量列表（标题、分类、点赞、图片路径），首屏加载 |
 | `data/prompts.part1~3.json` | 完整数据（含 `prompt` 正文），按需加载 |
-| `data/categories.json` / `data/meta.json` | 分类结构（`classic` 用扁平映射，`modern` 用大类 → 小类树） |
+| `data/categories.json` / `data/meta.json` | 分类结构（经典版用扁平映射，现代版用大类 → 小类树） |
 | `data/list-twitter.json` `data/prompts-twitter.json` | Twitter 收录（仅 `old/shuixian-deploy` 有数据） |
 | `data/twitter_manifest.json` | 指定 Twitter 分片文件清单 |
 
@@ -90,8 +107,8 @@ old/
 | 版本 | 字段 |
 | --- | --- |
 | `old/shuixian-deploy` | `id` `title` `prompt` `image` `images` `category` `likes` `author` `slug` `resultsCount` `thumb` `tweet` |
-| `classic` | 同上，另带 `themes` `styles` `person` |
-| `modern` | `id` `title` `prompt` `image` `category` `likes` |
+| 经典版（`shuixian-unified/classic`、`old/shuixian-deploy-classic`） | 同上，另带 `themes` `styles` `person` |
+| 现代版（`shuixian-unified`、`old/shuixian-deploy-modern`） | `id` `title` `prompt` `image` `category` `likes` |
 
 ## 图片托管：为什么不在 git 里
 
@@ -106,13 +123,16 @@ old/
 
 ## 本地预览
 
-三个版本各起一个端口即可对照（都必须走 HTTP，直接双击 HTML 会被 `fetch` 的跨域限制挡住）：
+各版本起一个端口即可对照（都必须走 HTTP，直接双击 HTML 会被 `fetch` 的跨域限制挡住）：
 
 ```bash
+python -m http.server 8094 --directory shuixian-unified
 python -m http.server 8091 --directory old/shuixian-deploy
-python -m http.server 8092 --directory shuixian-deploy-classic
-python -m http.server 8093 --directory shuixian-deploy-modern
+python -m http.server 8092 --directory old/shuixian-deploy-classic
+python -m http.server 8093 --directory old/shuixian-deploy-modern
 ```
+
+打开 <http://localhost:8094/> 就是合并版；点右上角「经典版 / 现代版」按钮切换皮肤。
 
 ## 部署与缓存
 
@@ -126,8 +146,12 @@ python -m http.server 8093 --directory shuixian-deploy-modern
 **改 CSS / JS / 组件后必须同时做两件事**，否则边缘节点会继续返回旧文件：
 
 1. 递增各 HTML 里的 `?v=` 与该版本 `js/base.js` 里的 `ASSET_VERSION`
-   （当前值：`shuixian-deploy-classic` = `24`、`shuixian-deploy-modern` = `2`、`old/shuixian-deploy` = `6`）
+   （当前值：`shuixian-unified` 现代版 = `2`、其 `classic/` 子目录 = `24`、`old/shuixian-deploy-modern` = `2`、
+   `old/shuixian-deploy-classic` = `24`、`old/shuixian-deploy` = `6`）
 2. 部署完成后 Purge Cache，本地用 `Ctrl + Shift + R` 硬刷新确认
+
+> **部署合并版**：把 `shuixian-unified/` 整个目录拖进 Cloudflare Pages 即可（它是自包含的，`classic/` 子目录一起带走）。
+> 如果 CF Pages 之前是按子目录（如 `shuixian-deploy-modern`）配置的，记得改成 `shuixian-unified`。
 
    
 ## 相关项目
