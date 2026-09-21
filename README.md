@@ -1,4 +1,6 @@
+<div align="center">
 
+<img src="shuixian-unified/images/icon.svg" width="96" alt="水仙的AI提示词">
 
 # 水仙的AI提示词
 
