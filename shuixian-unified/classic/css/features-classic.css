@@ -1,0 +1,103 @@
+/* =========================================================
+   水仙 · 经典版 — features-classic.css
+   在 classic/css/base.css 之后加载。沿用经典版变量
+   (--blue / --blue-soft / --ink / --line / --shadow)，
+   为经典版补上：命令面板、变量填空、备注框、快捷键帮助、LQIP。
+   ========================================================= */
+
+/* ---------- 导航里的命令面板入口 ---------- */
+.cmdk-btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 11px;border-radius:999px;
+  background:var(--white);border:1px solid var(--line);color:var(--gray);font-size:12px;font-weight:800;
+  letter-spacing:.02em;cursor:pointer;transition:.16s;font-family:inherit;flex:none;white-space:nowrap}
+.cmdk-btn:hover{color:var(--blue);border-color:var(--blue);background:var(--blue-soft)}
+.cmdk-btn kbd{font:inherit;font-size:11px;font-weight:700;opacity:.75}
+@media(max-width:920px){.cmdk-btn{padding:0 10px}.cmdk-btn .lbl{display:none}}
+
+/* ---------- 遮罩 / 面板 ---------- */
+.fxc-mask{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:24px}
+.fxc-mask.show{display:flex}
+.fxc-mask::before{content:"";position:absolute;inset:0;background:rgba(12,20,24,.42);backdrop-filter:blur(4px)}
+.fxc-panel{position:relative;background:var(--white);border:1px solid var(--line);border-radius:18px;
+  box-shadow:0 18px 60px rgba(31,106,133,.22);width:min(680px,100%);max-height:86vh;
+  display:flex;flex-direction:column;overflow:hidden;animation:fxcUp .22s ease}
+@keyframes fxcUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.fxc-head{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.fxc-head h3{margin:0;font-size:17px;font-weight:800}
+.fxc-head .sub{font-size:12px;color:var(--gray);margin-top:3px}
+.fxc-head .x{margin-left:auto;border:none;background:none;font-size:17px;color:var(--gray);cursor:pointer}
+.fxc-head .x:hover{color:var(--blue)}
+.fxc-body{padding:16px 18px;overflow:auto;flex:1}
+.fxc-foot{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:13px 18px;border-top:1px solid var(--line);
+  background:var(--bg)}
+.fxc-foot .spacer{flex:1}
+
+/* ---------- 命令面板 ---------- */
+.fxc-mask.cmdk{align-items:flex-start;padding-top:9vh}
+.fxc-mask.cmdk .fxc-panel{width:min(620px,100%);max-height:68vh}
+.cmdk-in{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.cmdk-in input{flex:1;border:none;outline:none;background:none;font-size:15px;color:var(--ink);font-family:inherit}
+.cmdk-in .esc{font-size:11px;color:var(--gray);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+.cmdk-list{overflow:auto;padding:8px;flex:1}
+.cmdk-sec{font-size:11px;font-weight:800;color:var(--gray-2);letter-spacing:.1em;padding:11px 12px 5px;text-transform:uppercase}
+.cmdk-row{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:10px 12px;border:none;
+  background:none;border-radius:11px;cursor:pointer;font-family:inherit;transition:.13s}
+.cmdk-row .ico{flex:none;width:28px;height:28px;border-radius:8px;background:var(--bg);display:grid;place-items:center;font-size:14px}
+.cmdk-row .tx{min-width:0;flex:1}
+.cmdk-row .t1{font-size:13.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmdk-row .t2{font-size:11px;color:var(--gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmdk-row.on,.cmdk-row:hover{background:var(--blue-soft)}
+.cmdk-row.on .t1,.cmdk-row:hover .t1{color:var(--blue)}
+.cmdk-row .thumb{width:30px;height:38px;border-radius:6px;object-fit:cover;background:var(--bg);flex:none}
+.cmdk-foot{padding:9px 16px;border-top:1px solid var(--line);font-size:11px;color:var(--gray);display:flex;gap:14px;flex-wrap:wrap}
+.cmdk-foot kbd{background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:1px 6px;margin-right:4px}
+mark.fxc-hl{background:var(--blue-soft);color:#1F6A85;border-radius:3px;padding:0 2px;font-weight:700}
+
+/* ---------- 变量填空 ---------- */
+.vfc-field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
+.vfc-field label{font-size:12.5px;font-weight:700;display:flex;gap:8px;align-items:center}
+.vfc-field .key{font-family:ui-monospace,monospace;font-size:11.5px;color:var(--blue);background:var(--blue-soft);
+  padding:2px 7px;border-radius:5px}
+.vfc-field input{padding:10px 13px;border:1px solid var(--line);border-radius:10px;font-size:13.5px;
+  font-family:inherit;color:var(--ink);outline:none;transition:.16s}
+.vfc-field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft)}
+.vfc-preview{margin-top:6px}
+.vfc-preview .lbl{font-size:11px;font-weight:800;color:var(--gray-2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.vfc-preview pre{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;
+  font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.7;white-space:pre-wrap;word-break:break-word;
+  max-height:200px;overflow:auto;color:var(--ink)}
+.vfc-preview pre .fill{background:var(--blue-soft);color:#1F6A85;border-radius:3px;padding:0 3px;font-weight:700}
+.vfc-preview pre .empty{color:#C0392B;border-bottom:1px dashed #C0392B}
+
+/* ---------- 灯箱里的备注 / 动作 ---------- */
+.fxc-lb-wrap{margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.fxc-acts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.fxc-btn{padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--white);
+  font-size:12.5px;font-weight:700;color:var(--ink-2);cursor:pointer;font-family:inherit;transition:.16s}
+.fxc-btn:hover{border-color:var(--blue);color:var(--blue)}
+.fxc-btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+.fxc-btn.pri:hover{background:#1F6A85;color:#fff}
+.fxc-note{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.fxc-note .nh{font-size:11px;font-weight:800;color:var(--gray-2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px}
+.fxc-note textarea{width:100%;min-height:62px;resize:vertical;border:1px solid var(--line);border-radius:9px;
+  padding:9px 11px;font-size:13px;font-family:inherit;color:var(--ink);outline:none;background:var(--white)}
+.fxc-note textarea:focus{border-color:var(--blue)}
+.fxc-note .mt{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;color:var(--gray);margin-top:6px}
+
+/* ---------- 快捷键帮助 ---------- */
+.fxc-kbd{display:grid;grid-template-columns:1fr 1fr;gap:9px 20px}
+.fxc-kbd .r{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--ink-2);
+  padding:7px 0;border-bottom:1px dashed var(--line)}
+.fxc-kbd kbd{font:inherit;font-size:11.5px;font-weight:700;background:var(--bg);border:1px solid var(--line);
+  border-radius:6px;padding:2px 7px;white-space:nowrap}
+@media(max-width:560px){.fxc-kbd{grid-template-columns:1fr}}
+
+/* ---------- 随机漫游浮球 ---------- */
+.fxc-dice{position:fixed;right:20px;bottom:20px;z-index:8000;width:48px;height:48px;border-radius:50%;
+  border:none;background:var(--blue);color:#fff;font-size:20px;cursor:pointer;
+  box-shadow:0 10px 26px rgba(31,106,133,.35);transition:.2s;display:grid;place-items:center}
+.fxc-dice:hover{transform:translateY(-3px) rotate(-8deg)}
+@media(max-width:560px){.fxc-dice{right:12px;bottom:12px;width:43px;height:43px;font-size:18px}}
+
+/* ---------- LQIP ---------- */
+.fxc-lqip{filter:blur(12px);transform:scale(1.03);transition:filter .45s ease,transform .45s ease}
+.fxc-lqip.on{filter:none;transform:none}

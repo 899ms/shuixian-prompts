@@ -118,7 +118,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 @media(max-width:1080px){
   .nav-search{width:200px}.nav-links a{padding:8px 10px}
 }
-@media(max-width:860px){
+@media(max-width:1000px){
   .nav-links,.nav-search{display:none}.nav-toggle{display:grid}
   .nav-links.open{display:flex;position:absolute;top:var(--nav-h);left:0;right:0;flex-direction:column;
     background:var(--surface);border-bottom:1px solid var(--line);padding:14px 20px;gap:4px;
@@ -158,6 +158,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .detail-img .ph-img,.lb-img .ph-img{position:static;inset:auto;width:auto;max-width:100%;
   max-height:min(86vh,760px);height:auto;object-fit:contain;display:block;
   border-radius:14px;box-shadow:var(--shadow)}
+/* 桌面端灯箱图片区的上限跟随面板高度（90vh），避免长图把面板顶出视口 */
+.lb-img .ph-img{max-height:calc(90vh - 36px)}
 
 /* Tablet: single column, QR moves below text */
 @media(max-width:1023px) and (min-width:768px){
@@ -304,12 +306,28 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .lb-backdrop{position:absolute;inset:0;background:rgba(10,16,20,.62);backdrop-filter:blur(6px)}
 .lb-panel{position:relative;z-index:2;width:min(1040px,100%);max-height:90vh;background:var(--surface);
   border-radius:var(--radius-lg);overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;
+  grid-template-rows:minmax(0,1fr);
   box-shadow:var(--shadow-lg);animation:lbUp .3s var(--ease)}
 @keyframes lbUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .lb-img{position:relative;background:var(--surface-2);min-height:420px;display:grid;place-items:center;overflow:auto;padding:18px}
 .lb-img .ph{width:100%;height:100%;position:absolute;inset:0}
 .lb-img .wm{position:absolute;font-family:var(--serif);font-weight:900;font-size:120px;color:rgba(255,255,255,.35);mix-blend-mode:overlay}
-.lb-body{padding:30px 32px;overflow:auto;display:flex;flex-direction:column;gap:16px}
+/* 正文区是 flex 列容器，且自己承担滚动（.lb-img 与 .lb-body 各自独立滚动）。
+   三个条件缺一不可：
+     ① min-height:0 —— grid/flex 子项默认 min-height:auto 会拒绝收缩，
+        去掉它整行会被内容撑到 2000px+，再被 .lb-panel{overflow:hidden} 裁掉；
+     ② 子项 flex:none —— 否则高度受限时 flex 会把可缩的子项压扁
+        （.lb-prompt 曾被压到只剩 32px 高而内容有 1755px，表现为"提示词被截断"）；
+     ③ .lb-prompt 自身不设 max-height/overflow —— 滚动只由本容器一层承担，
+        避免嵌套滚动容器让手指划错目标。 */
+.lb-body{padding:30px 32px;overflow:auto;min-height:0;display:flex;flex-direction:column;gap:16px}
+.lb-body>*{flex:none}
+/* 提示词框：展示全文，不再自己限高/出滚动条。
+   滚动交给外层 .lb-body 统一承担 —— 否则一个浮层里会叠出两个滚动容器，
+   手指落在提示词框里划的是框内（旧的 230px 小窗口），正文滑不动。 */
+.lb-prompt{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+  font-family:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.7;
+  color:var(--ink);white-space:pre-wrap;word-break:break-word;overflow:visible}
 .lb-close{position:absolute;top:14px;right:14px;z-index:5;width:40px;height:40px;border-radius:50%;
   background:rgba(255,255,255,.9);display:grid;place-items:center;box-shadow:var(--shadow-sm);color:var(--ink)}
 .lb-close:hover{color:var(--coral);transform:rotate(90deg)}
@@ -319,14 +337,36 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .lb-tags{display:flex;flex-wrap:wrap;gap:7px}
 .tag{font-size:12.5px;padding:5px 12px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);font-weight:600}
 .tag.cc{background:var(--cc-bg,var(--garden-050));color:var(--cc,var(--garden))}
-.lb-prompt{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
-  font-family:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.7;
-  color:var(--ink);white-space:pre-wrap;word-break:break-word;max-height:230px;overflow:auto}
 .lb-prompt .tok{background:var(--daffodil-050);color:#1F6A85;border-radius:5px;padding:1px 5px;font-weight:600}
 .lb-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
 .lb-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted)}
 .lb-meta .likes{display:inline-flex;align-items:center;gap:6px;color:var(--coral);font-weight:700}
-@media(max-width:780px){.lb-panel{grid-template-columns:1fr;max-height:92vh}.lb-img{min-height:240px}}
+/* 手机端：单列堆叠。必须同时约束「行」高，否则 grid 的 auto 行会按内容撑高
+   （正文那段能到 900px+），而 .lb-panel 又是 overflow:hidden —— 超出部分被直接裁掉，
+   表现为图片占满一屏、下方正文既看不到也滑不到。
+   用 minmax(0,auto) 让第二行可以收缩，height:100% 把面板钉在视口内，
+   再由 .lb-body 自己 overflow:auto 滚动。 */
+@media(max-width:780px){
+  .lb-panel{
+    grid-template-columns:1fr;
+    grid-template-rows:minmax(0,auto) minmax(0,1fr);
+    height:100%;
+    max-height:92vh;
+  }
+  /* 手机端图片区只做「等比缩略」，关键点有三个：
+     ① overflow 用 clip 而不是 base 里的 auto —— 去掉嵌套滚动容器，
+        否则手指落在图片上时划的是图片内部，用户会觉得「页面滑不动」；
+     ② display:flex + min-height:0 让图片真正被压进容器，不撑破行高；
+     ③ .ph-img 的 max-height 由全局的 86vh 收到 100%，长图不再顶穿图片区。 */
+  .lb-img{
+    min-height:0;max-height:46vh;padding:12px;
+    overflow:clip;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .lb-img .ph{position:absolute;inset:0}
+  .lb-img .ph-img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+  .lb-body{min-height:0;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+}
 
 /* ============ PAGE HEAD (inner pages) ============ */
 .page-head{padding:10x;position:relative}

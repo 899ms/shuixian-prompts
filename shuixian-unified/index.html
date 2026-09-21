@@ -6,8 +6,13 @@
 <title>水仙的AI提示词 · 提示词花园</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://r2.qqsrc.com" crossorigin>
+<link rel="dns-prefetch" href="https://r2.qqsrc.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=2">
+<link rel="stylesheet" href="css/base.css?v=12">
+<link rel="stylesheet" href="css/features.css?v=12">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2C8CAB">
 </head>
 <body data-page="index">
 <main>
@@ -16,23 +21,23 @@
   <section class="hero">
     <div class="hero-grid">
       <div class="hero-left">
-        <p class="kicker">Prompt Garden · 提示词花园</p>
-        <h1>把灵感种进<span class="hl">水仙</span>的<br class="hide-mobile">AI 提示词花园</h1>
-        <p class="lead">5,452 条精选提示词，按主题分成了 12 大分类、79 个小类——人物、动漫、海报、插画、产品、游戏……慢慢逛，总有一句能帮你出图。</p>
+        <p data-i18n="brand_sub" class="kicker">Prompt Garden · 提示词花园</p>
+        <h1 data-i18n="idx_h1">把灵感种进<span class="hl">水仙</span>的<br class="hide-mobile">AI 提示词花园</h1>
+        <p class="lead" data-i18n="idx_lead">5,452 条精选提示词，按主题分成了 12 大分类、79 个小类——人物、动漫、海报、插画、产品、游戏……慢慢逛，总有一句能帮你出图。</p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="gallery.html">开始逛画廊
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a class="btn btn-soft" href="categories.html">浏览全部分类</a>
+          <a data-i18n="idx_cta_cats" class="btn btn-soft" href="categories.html">浏览全部分类</a>
         </div>
         <div class="hero-stats">
-          <div class="s"><b>5,452</b><span>精选提示词</span></div>
-          <div class="s"><b>12</b><span>大分类</span></div>
-          <div class="s"><b>79</b><span>小分类</span></div>
+          <div class="s"><b>5,452</b><span data-i18n="idx_stat_prompts">精选提示词</span></div>
+          <div class="s"><b>12</b><span data-i18n="idx_stat_majors">大分类</span></div>
+          <div class="s"><b>79</b><span data-i18n="idx_stat_subs">小分类</span></div>
         </div>
       </div>
       <div class="hero-qr">
         <img src="images/wechat-qr.jpg" alt="水仙的AI提示词 微信公众号">
-        <span class="qr-label">扫码关注公众号</span>
+        <span data-i18n="idx_qr" class="qr-label">扫码关注公众号</span>
       </div>
     </div>
   </section>
@@ -42,9 +47,9 @@
     <div class="shell">
       <div class="sec-head">
         <div>
-          <p class="eyebrow">12 大分类 · 79 小类</p>
-          <h2>挑一个主题，慢慢逛</h2>
-          <p>点开任意一栏，进入对应画廊；每一类都按风格聚合了上百条提示词。</p>
+          <p class="eyebrow" data-i18n="idx_cats_eyebrow">12 大分类 · 79 小类</p>
+          <h2 data-i18n="idx_cats_h2">挑一个主题，慢慢逛</h2>
+          <p data-i18n="idx_cats_p">点开任意一栏，进入对应画廊；每一类都按风格聚合了上百条提示词。</p>
         </div>
         <a class="link-more" href="categories.html">查看分类总览
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -58,16 +63,16 @@
     <div class="shell">
       <div class="sec-head">
         <div>
-          <p class="eyebrow">Editor's Pick</p>
-          <h2>每日精选</h2>
-          <p>从各路主题里随机捞了几条，点开看详情；不喜欢这波，点「换一批」。</p>
+          <p data-i18n="idx_pick_eyebrow" class="eyebrow">Editor's Pick</p>
+          <h2 data-i18n="idx_pick_h2">每日精选</h2>
+          <p data-i18n="idx_pick_p">从各路主题里随机捞了几条，点开看详情；不喜欢这波，点「换一批」。</p>
         </div>
         <button class="btn btn-soft" id="refreshFeatured">换一批
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.22-8.56"/><path d="M21 3v6h-6"/></svg></button>
       </div>
       <div class="masonry" id="featuredGrid"></div>
       <div style="text-align:center;margin-top:30px">
-        <a class="btn btn-primary" href="gallery.html?cat=全部">查看全部 5,452 条
+        <a class="btn btn-primary" href="gallery.html?cat=全部" data-i18n="idx_see_all">查看全部 5,452 条
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
@@ -77,20 +82,22 @@
   <section class="sec">
     <div class="shell cta-grid">
       <div style="background:linear-gradient(135deg,var(--garden),var(--garden-600));border-radius:var(--radius-lg);color:#fff;box-shadow:var(--shadow)">
-        <h3 style="font-family:var(--serif);font-size:26px;margin:0 0 10px">有好的提示词？投给我们</h3>
-        <p style="opacity:.92;margin:0 0 20px;line-height:1.7">你的作品会出现在水仙的花园里，被更多人看到、使用、喜欢。</p>
-        <a class="btn btn-amber" href="submit.html">立即投稿</a>
+        <h3 data-i18n="idx_cta1_h3" style="font-family:var(--serif);font-size:26px;margin:0 0 10px">有好的提示词？投给我们</h3>
+        <p data-i18n="idx_cta1_p" style="opacity:.92;margin:0 0 20px;line-height:1.7">你的作品会出现在水仙的花园里，被更多人看到、使用、喜欢。</p>
+        <a data-i18n="idx_cta1_btn" class="btn btn-amber" href="submit.html">立即投稿</a>
       </div>
       <div style="background:linear-gradient(135deg,var(--daffodil),var(--daffodil-050));border-radius:var(--radius-lg);color:#08242D;box-shadow:var(--shadow)">
-        <h3 style="font-family:var(--serif);font-size:26px;margin:0 0 10px">喜欢这个花园？</h3>
-        <p style="opacity:.9;margin:0 0 20px;line-height:1.7">请作者喝杯咖啡，支持水仙持续更新更多精选提示词。</p>
-        <a class="btn btn-primary" href="sponsor.html">去赞赏</a>
+        <h3 data-i18n="idx_cta2_h3" style="font-family:var(--serif);font-size:26px;margin:0 0 10px">喜欢这个花园？</h3>
+        <p data-i18n="idx_cta2_p" style="opacity:.9;margin:0 0 20px;line-height:1.7">请作者喝杯咖啡，支持水仙持续更新更多精选提示词。</p>
+        <a data-i18n="idx_cta2_btn" class="btn btn-primary" href="sponsor.html">去赞赏</a>
       </div>
     </div>
   </section>
 
 </main>
-<script src="js/base.js?v=2"></script>
+<script src="js/base.js?v=12"></script>
+<script src="js/i18n.js?v=12"></script>
+<script src="js/features.js?v=12"></script>
 <script>
 App.init({ page:'index', onReady:function(){
   const D = App.D;

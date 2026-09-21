@@ -1,0 +1,32 @@
+{
+  "name": "水仙的AI提示词 · 提示词花园",
+  "short_name": "水仙提示词",
+  "description": "5,430 条精选 AI 图像提示词，按 12 大分类 / 79 小类整理，支持变量填空、标签分面与收藏合集。",
+  "lang": "zh-CN",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F7F7F7",
+  "theme_color": "#2C8CAB",
+  "categories": ["design", "productivity", "photo"],
+  "icons": [
+    {
+      "src": "images/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    { "name": "画廊", "url": "./gallery.html" },
+    { "name": "搜索", "url": "./search.html" },
+    { "name": "我的合集", "url": "./favorites.html" }
+  ]
+}

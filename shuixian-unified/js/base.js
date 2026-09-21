@@ -10,7 +10,7 @@
    ========================================================= */
 const App = (() => {
   // ---------- 配置 ----------
-  const ASSET_VERSION = '2';                        // 每次更新静态资源请 +1，并同步 HTML 里的 ?v=
+  const ASSET_VERSION = '12';                        // 每次更新静态资源请 +1，并同步 HTML 里的 ?v=
   const IMG_BASE = "https://r2.qqsrc.com";          // Cloudflare R2 公共图床
   const FAV_KEY = 'sx-boards-v2';
   const REC_KEY = 'sx-recent-v2';
@@ -20,6 +20,12 @@ const App = (() => {
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => (s == null ? '' : String(s)).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
   const imgUrl = p => (p ? IMG_BASE + '/' + p : p);
+
+  // ---------- 语言钩子（features.js 提供实现；未加载时回退中文） ----------
+  // 只影响「显示」；数据的 category、URL 的 ?cat= 一律保持中文原名。
+  const T = (k, d) => (window.FX && typeof FX.t === 'function') ? FX.t(k) : (d != null ? d : k);
+  const TF = (k, o) => (window.FX && typeof FX.tf === 'function') ? FX.tf(k, o) : k;
+  const catLabel = c => (window.FX && typeof FX.catName === 'function') ? FX.catName(c) : c;
 
   function heartSvg(filled){
     return `<svg viewBox="0 0 24 24" fill="${filled?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.3 8.4 2 5 5.3 5c2 0 3.4 1.2 4.7 3 1.3-1.8 2.7-3 4.7-3C18 5 19.7 8.4 22 11.7 19.5 16.4 12 21 12 21z"/></svg>`;
@@ -124,15 +130,15 @@ const App = (() => {
     const b = getBoards(); const board = b.boards.find(x => x.id === b.active) || b.boards[0];
     const i = board.items.indexOf(id);
     if (i >= 0) board.items.splice(i, 1); else board.items.push(id);
-    saveBoards(b); toast(i >= 0 ? '已从画板移除' : '已加入收藏画板'); updateFavButtons(); return i < 0;
+    saveBoards(b); toast(i >= 0 ? T('toast_unfaved', '已从画板移除') : T('toast_faved', '已加入收藏画板')); updateFavButtons(); return i < 0;
   }
   function updateFavButtons(){ $$('.act.fav').forEach(btn => { const id = +btn.dataset.id; const on = isFav(id); btn.classList.toggle('on', on); btn.innerHTML = heartSvg(on); }); }
 
   // ---------- Toast & Copy ----------
   let toastEl;
   function toast(msg){ if (!toastEl){ toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); } toastEl.textContent = msg; toastEl.classList.add('show'); clearTimeout(toastEl._t); toastEl._t = setTimeout(() => toastEl.classList.remove('show'), 1800); }
-  function copyText(t){ if (navigator.clipboard){ navigator.clipboard.writeText(t).then(() => toast('提示词已复制')).catch(() => fallbackCopy(t)); } else fallbackCopy(t); }
-  function fallbackCopy(t){ const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast('提示词已复制'); } catch(e){} ta.remove(); }
+  function copyText(t){ if (navigator.clipboard){ navigator.clipboard.writeText(t).then(() => toast(T('toast_copied', '提示词已复制'))).catch(() => fallbackCopy(t)); } else fallbackCopy(t); }
+  function fallbackCopy(t){ const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast(T('toast_copied', '提示词已复制')); } catch(e){} ta.remove(); }
 
   // ---------- 卡片渲染 ----------
   const io = new IntersectionObserver((entries) => {
@@ -146,10 +152,10 @@ const App = (() => {
     const img = s.image;
     const { bg, main } = catColor(category);
     const hh = 180 + ((s.id || 0) % 5) * 46;
-    const wm = (category || '图').slice(0, 1);
-    const hint = '<span class="load-hint">原图加载中，首次打开请稍候…</span>';
+    const wm = (catLabel(category) || '图').slice(0, 1);
+    const hint = '<span class="load-hint">' + esc(T('load_hint', '原图加载中，首次打开请稍候…')) + '</span>';
     const inner = img
-      ? `${hint}<img class="ph-img" data-src="${esc(imgUrl(img))}" alt="${esc(category)}" onload="this.previousElementSibling?.remove()" onerror="this.style.display='none'">`
+      ? `${hint}<img class="ph-img" data-src="${esc(imgUrl(img))}" alt="${esc(catLabel(category))}" onload="this.previousElementSibling?.remove()" onerror="this.style.display='none'">`
       : `<span class="wm">${esc(wm)}</span>`;
     return `<div class="ph" style="height:${hh}px;background:linear-gradient(140deg,${bg} 0%,${main} 135%);">${inner}</div>`;
   }
@@ -159,10 +165,10 @@ const App = (() => {
     return `<article class="card" data-id="${s.id}">
       <a class="thumb" href="detail.html?id=${s.id}" style="--cc:${main}">
         ${thumb(s)}
-        <span class="cat-pill" style="--cc:${main}">${esc(s.category)}</span>
+        <span class="cat-pill" style="--cc:${main}">${esc(catLabel(s.category))}</span>
         <span class="hover-actions">
-          <button class="act fav ${isFav(s.id) ? 'on' : ''}" data-id="${s.id}" title="收藏">${heartSvg(isFav(s.id))}</button>
-          <button class="act" data-copy="${s.id}" title="复制提示词"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke-linecap="round"/></svg></button>
+          <button class="act fav ${isFav(s.id) ? 'on' : ''}" data-id="${s.id}" title="${esc(T('title_fav', '收藏'))}">${heartSvg(isFav(s.id))}</button>
+          <button class="act" data-copy="${s.id}" title="${esc(T('copy_prompt', '复制提示词'))}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke-linecap="round"/></svg></button>
         </span>
       </a>
       <div class="body">
@@ -174,7 +180,7 @@ const App = (() => {
 
   function renderCards(list, container){
     if (!container) return;
-    if (!list.length){ container.innerHTML = '<div class="empty"><div class="big">🌱</div>没有匹配的提示词，换个关键词或分类试试。</div>'; return; }
+    if (!list.length){ container.innerHTML = '<div class="empty"><div class="big">🌱</div>' + esc(T('empty_no_match', '没有匹配的提示词，换个关键词或分类试试。')) + '</div>'; return; }
     container.innerHTML = list.map(cardHTML).join('');
     observeImages(container);
     container.querySelectorAll('.act.fav').forEach(b => b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); toggleFav(+b.dataset.id); }));
@@ -187,11 +193,11 @@ const App = (() => {
     if (!container || !META) return;
     container.innerHTML = META.majors.map(m => {
       const { bg, main } = catColor(m.name);
-      const subs = m.subs.slice(0, 4).map(s => `<span>${esc(s.name)}</span>`).join('') + (m.subs.length > 4 ? `<span class="more">+${m.subs.length - 4}</span>` : '');
+      const subs = m.subs.slice(0, 4).map(s => `<span>${esc(catLabel(s.name))}</span>`).join('') + (m.subs.length > 4 ? `<span class="more">+${m.subs.length - 4}</span>` : '');
       return `<a class="cat-card" href="gallery.html?cat=${encodeURIComponent(m.name)}" style="--cc:${main};--cc-bg:${bg}">
         <div class="ctop">
           <span class="cico" style="--cc-bg:${bg}">${MAJ_EMOJI[m.name] || '📁'}</span>
-          <div><h3>${esc(m.name)}</h3><div class="ccount">${m.count} 条 · ${m.subs.length} 小类</div></div>
+          <div><h3>${esc(catLabel(m.name))}</h3><div class="ccount">${esc(TF('cat_major_meta', { n: m.count, sub: m.subs.length }))}</div></div>
         </div>
         <div class="subs">${subs}</div>
         <span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -217,10 +223,10 @@ const App = (() => {
     const lb = buildLightbox();
     const { bg, main } = catColor(s.category);
     const lbImg = $('#lbImg');
-    const hint = '<span class="load-hint">原图加载中，首次打开请稍候…</span>';
-    const fallback = `<div class="ph" style="background:linear-gradient(140deg,${bg},${main})"></div><span class="wm">${esc((s.category || '图').slice(0,1))}</span>`;
+    const hint = '<span class="load-hint">' + esc(T('load_hint', '原图加载中，首次打开请稍候…')) + '</span>';
+    const fallback = `<div class="ph" style="background:linear-gradient(140deg,${bg},${main})"></div><span class="wm">${esc((catLabel(s.category) || '图').slice(0,1))}</span>`;
     if (s.image){
-      lbImg.innerHTML = `${hint}<img class="ph-img" src="${esc(imgUrl(s.image))}" alt="${esc(s.category)}">`;
+      lbImg.innerHTML = `${hint}<img class="ph-img" src="${esc(imgUrl(s.image))}" alt="${esc(catLabel(s.category))}">`;
       const im = lbImg.querySelector('img');
       im.addEventListener('load', () => { const h = lbImg.querySelector('.load-hint'); if (h) h.remove(); });
       im.addEventListener('error', () => { lbImg.innerHTML = fallback; });
@@ -228,19 +234,19 @@ const App = (() => {
     } else {
       lbImg.innerHTML = fallback;
     }
-    const tokPrompt = esc(s.prompt || '（加载中…）').replace(/(\{argument[^}]*\})/g, '<span class="tok">$1</span>');
+    const tokPrompt = esc(s.prompt || T('loading_dots', '（加载中…）')).replace(/(\{argument[^}]*\})/g, '<span class="tok">$1</span>');
     $('#lbBody').innerHTML = `
-      <div class="lb-crumb"><a href="gallery.html">画廊</a> › <a href="gallery.html?cat=${encodeURIComponent(s.category)}" style="--cc:${main}">${esc(s.category)}</a></div>
+      <div class="lb-crumb"><a href="gallery.html">${esc(T('de_crumb_gallery', '画廊'))}</a> › <a href="gallery.html?cat=${encodeURIComponent(s.category)}" style="--cc:${main}">${esc(catLabel(s.category))}</a></div>
       <h2 class="lb-title">${esc(s.title)}</h2>
-      <div class="lb-tags"><span class="tag cc" style="--cc:${main};--cc-bg:${bg}">${esc(s.category)}</span><span class="tag">ID #${s.id}</span></div>
+      <div class="lb-tags"><span class="tag cc" style="--cc:${main};--cc-bg:${bg}">${esc(catLabel(s.category))}</span><span class="tag">ID #${s.id}</span></div>
       <div class="lb-prompt" id="lbPrompt">${tokPrompt}</div>
       <div class="lb-actions">
-        <button class="btn btn-primary" id="lbCopy">复制提示词</button>
-        <button class="btn btn-soft fav-btn ${isFav(s.id) ? 'on' : ''}" data-id="${s.id}">${heartSvg(isFav(s.id))} 收藏</button>
-        <button class="btn btn-soft" data-copy="${s.id}">复制原文</button>
+        <button class="btn btn-primary" id="lbCopy">${esc(T('copy_prompt', '复制提示词'))}</button>
+        <button class="btn btn-soft fav-btn ${isFav(s.id) ? 'on' : ''}" data-id="${s.id}">${heartSvg(isFav(s.id))} ${esc(isFav(s.id) ? T('fav_added', '已收藏') : T('fav_add', '收藏'))}</button>
+        <button class="btn btn-soft" data-copy="${s.id}">${esc(T('copy_plain', '复制原文'))}</button>
       </div>`;
     $('#lbCopy').addEventListener('click', () => copyText(s.prompt || ''));
-    $('#lbBody').querySelector('.fav-btn').addEventListener('click', function(){ const on = toggleFav(s.id); this.classList.toggle('on', on); this.innerHTML = heartSvg(on) + (on ? ' 已收藏' : ' 收藏'); updateFavButtons(); });
+    $('#lbBody').querySelector('.fav-btn').addEventListener('click', function(){ const on = toggleFav(s.id); this.classList.toggle('on', on); this.innerHTML = heartSvg(on) + ' ' + esc(on ? T('fav_added', '已收藏') : T('fav_add', '收藏')); updateFavButtons(); });
     $('#lbBody').querySelector('[data-copy]').addEventListener('click', () => copyText(s.prompt || ''));
     // 轻量数据无 prompt：按需补齐
     if (!s.prompt){
@@ -258,6 +264,8 @@ const App = (() => {
     const file = location.pathname.split('/').pop() || 'index.html';
     const rootPages = ['index.html','gallery.html','categories.html','search.html','detail.html','favorites.html','about.html','sponsor.html','submit.html','404.html'];
     const classicPages = ['index.html','gallery.html','favorites.html','classify.html'];
+    // 记下语义，交给 features.js 按当前语言显示文字
+    btn.dataset.skin = inClassic ? 'modern' : 'classic';
     btn.textContent = inClassic ? '现代版' : '经典版';
     btn.addEventListener('click', function(e){
       e.preventDefault();
@@ -277,7 +285,11 @@ const App = (() => {
       .then(wireCommon)
       .then(setupSkinSwitch)
       .then(loadData)
-      .then(() => { if (typeof options.onReady === 'function') options.onReady(); })
+      .then(() => {
+        if (typeof options.onReady === 'function') options.onReady();
+        // 通知 features.js（新功能层）可以装配了
+        window.dispatchEvent(new CustomEvent('sx:ready', { detail: { page: options.page } }));
+      })
       .catch(err => { console.error(err); const l = document.querySelector('.loading'); if (l) l.textContent = '数据加载失败：' + err.message + '（请通过本地服务器或 CF 打开本页）'; });
   }
 

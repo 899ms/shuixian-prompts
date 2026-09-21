@@ -3,79 +3,285 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>收藏 · 水仙的AI提示词</title>
+<title>收藏合集 · 水仙的AI提示词</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://r2.qqsrc.com" crossorigin>
 <link rel="dns-prefetch" href="https://r2.qqsrc.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=2">
+<link rel="stylesheet" href="css/base.css?v=12">
+<link rel="stylesheet" href="css/features.css?v=12">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2C8CAB">
 </head>
 <body data-page="favorites">
 <main>
   <div class="page-head"><div class="shell">
-    <p class="eyebrow">Favorites</p>
-    <h1>我的收藏画板</h1>
-    <p class="sub">无需登录，收藏保存在本机浏览器。可建多个画板分门别类，随时导出 Markdown。</p>
+    <p class="eyebrow">Collections</p>
+    <h1 data-i18n="col_title">我的收藏合集</h1>
+    <p data-i18n="col_sub" class="sub">无需登录，全部保存在本机浏览器。可建多个合集分门别类，拖拽排序、跨合集移动、导出 JSON / Markdown / CSV，也能批量下载图片。</p>
   </div></div>
 
   <div class="shell">
-    <div class="board-tabs" id="boardTabs"></div>
-    <div class="board-bar">
-      <button class="board-tab" id="newBoardBtn" style="border-style:dashed">＋ 新建画板</button>
-      <span class="spacer"></span>
-      <button class="btn btn-soft" id="exportBtn">导出 Markdown</button>
+    <div class="col-head">
+      <div class="col-tabs" id="boardTabs"></div>
+      <button data-i18n="col_new" class="col-tab" id="newBoardBtn" style="border-style:dashed">＋ 新建合集</button>
     </div>
+
+    <div class="board-bar">
+      <span class="count" id="boardCount" style="font-weight:700"></span>
+      <span class="spacer"></span>
+      <div class="menu-wrap">
+        <button data-i18n="col_export_all" class="btn btn-soft" id="embedExportAll">导出全部</button>
+      </div>
+    </div>
+
+    <div class="col-tools" id="colTools">
+      <button data-i18n="col_export_cur" class="btn btn-soft" id="colExportBtn">导出当前合集</button>
+      <button data-i18n="col_import" class="btn btn-soft" id="colImportBtn">导入 JSON</button>
+      <input type="file" id="colImportFile" accept=".json" style="display:none">
+      <button data-i18n="col_dl_all" class="btn btn-soft" id="colDownloadBtn">批量下载图片</button>
+      <button data-i18n="col_rename_full" class="btn btn-soft" id="colRenameBtn">重命名合集</button>
+      <button data-i18n="col_dup" class="btn btn-soft" id="colDupBtn">复制合集</button>
+      <button data-i18n="col_clear" class="btn btn-soft" id="colClearBtn">清空合集</button>
+      <button data-i18n="col_del" class="btn btn-soft" id="colDelBtn">删除合集</button>
+    </div>
+
     <div class="masonry" id="favGrid"></div>
-    <div class="empty" id="favEmpty" style="display:none"><div class="big">🌼</div>这个画板还是空的，去画廊点 ❤ 收藏喜欢的提示词吧。</div>
+    <div class="empty" id="favEmpty" style="display:none"><div class="big">🌼</div><span data-i18n="col_empty">这个合集还是空的，去画廊点 ❤ 收藏喜欢的提示词吧。</span></div>
+    <p data-i18n="col_hint" class="fx-note" id="colHint" style="text-align:center;margin-top:22px">提示：拖动卡片可调整合集内顺序；卡片右上角的按钮可移出或移动到其他合集。</p>
   </div>
 </main>
-<script src="js/base.js?v=2"></script>
+<script src="js/base.js?v=12"></script>
+<script src="js/i18n.js?v=12"></script>
+<script src="js/features.js?v=12"></script>
 <script>
-App.init({ page:'favorites', onReady:function(){
-  let B = App.getBoards();
+(function(){
+  function start(){
+    var B = FX.loadBoards();
+    var fileIn = document.getElementById('colImportFile');
 
-  function save(){ App.saveBoards(B); }
-  function renderTabs(){
-    $('#boardTabs').innerHTML = B.boards.map(b =>
-      `<button class="board-tab ${b.id===B.active?'active':''}" data-id="${b.id}">${b.name} <span style="opacity:.6;font-weight:500">${b.items.length}</span></button>`
-    ).join('');
-    $('#boardTabs').querySelectorAll('[data-id]').forEach(t => t.addEventListener('click', () => {
-      B.active = t.dataset.id; save(); renderTabs(); renderGrid();
-    }));
-  }
-  $('#newBoardBtn').addEventListener('click', () => {
-    const name = prompt('给新画板起个名字：', '灵感合集'); if (!name) return;
-    const id = 'b' + Date.now();
-    B.boards.push({ id, name, items:[] });
-    B.active = id; save(); renderTabs(); renderGrid(); App.toast('已新建画板');
-  });
-  $('#exportBtn').addEventListener('click', () => {
-    const board = B.boards.find(x => x.id === B.active);
-    if (!board || !board.items.length){ App.toast('画板为空，无法导出'); return; }
-    const lines = ['# ' + board.name + '（水仙的AI提示词）', ''];
-    board.items.forEach(id => {
-      const s = App.findSample(id); if (!s) return;
-      lines.push('## ' + s.title + '  ');
-      lines.push('- 分类：' + s.category + ' · ID #' + s.id + ' · ❤ ' + s.likes);
-      lines.push('```'); lines.push(s.prompt || ''); lines.push('```'); lines.push('');
+    function save(){ FX.saveBoards(B); }
+    function board(){ return FX.activeBoard(B); }
+    function boardItems(b){ return b.items.map(function(id){ return App.findSample(id); }).filter(Boolean); }
+
+    /* ---------- 合集标签 ---------- */
+    function renderTabs(){
+      var el = document.getElementById('boardTabs');
+      el.innerHTML = B.boards.map(function(b){
+        return '<button class="col-tab ' + (b.id===B.active?'active':'') + '" data-id="' + b.id + '" draggable="true" title="' + FX.esc(FX.t('col_drag_hint')) + '">'
+          + '<span class="nm">' + FX.esc(b.name) + '</span><span class="n">' + b.items.length + '</span></button>';
+      }).join('');
+      Array.prototype.forEach.call(el.querySelectorAll('[data-id]'), function(tab){
+        var id = tab.dataset.id;
+        tab.addEventListener('click', function(){ B.active = id; save(); renderTabs(); renderGrid(); });
+        tab.addEventListener('dblclick', function(e){ e.preventDefault(); renameBoard(id); });
+        // 拖拽排序
+        tab.addEventListener('dragstart', function(e){ e.dataTransfer.setData('text/fxboard', id); e.dataTransfer.effectAllowed='move'; });
+        tab.addEventListener('dragover', function(e){ e.preventDefault(); tab.classList.add('drag-over'); });
+        tab.addEventListener('dragleave', function(){ tab.classList.remove('drag-over'); });
+        tab.addEventListener('drop', function(e){
+          e.preventDefault(); tab.classList.remove('drag-over');
+          var from = e.dataTransfer.getData('text/fxboard');
+          if (!from || from === id) return;
+          var fi = B.boards.findIndex(function(x){ return x.id===from; });
+          var ti = B.boards.findIndex(function(x){ return x.id===id; });
+          if (fi<0||ti<0) return;
+          var moved = B.boards.splice(fi,1)[0];
+          B.boards.splice(ti,0,moved); save(); renderTabs(); App.toast(FX.t('col_ordered_board'));
+        });
+      });
+    }
+
+    function renameBoard(id){
+      var b = B.boards.find(function(x){ return x.id===id; }); if (!b) return;
+      var name = prompt(FX.t('col_prompt_rename'), b.name); if (!name) return;
+      b.name = name.trim() || b.name; save(); renderTabs(); App.toast(FX.t('col_renamed'));
+    }
+
+    /* ---------- 列表 ---------- */
+    function renderGrid(){
+      var b = board();
+      var items = boardItems(b);
+      document.getElementById('boardCount').textContent = FX.tf('col_count', { name: b.name, n: items.length });
+      if (!items.length){
+        document.getElementById('favGrid').innerHTML = '';
+        document.getElementById('favEmpty').style.display = 'block';
+        document.getElementById('colHint').style.display = 'none';
+        return;
+      }
+      document.getElementById('favEmpty').style.display = 'none';
+      document.getElementById('colHint').style.display = 'block';
+      App.renderCards(items, document.getElementById('favGrid'));
+      decorateItems(b);
+    }
+
+    function decorateItems(b){
+      var cards = document.querySelectorAll('#favGrid .card');
+      Array.prototype.forEach.call(cards, function(card){
+        var id = +card.dataset.id;
+        card.draggable = true;
+        card.dataset.boardId = b.id;
+        card.addEventListener('dragstart', function(e){ e.dataTransfer.setData('text/fxitem', String(id)); card.classList.add('dragging'); });
+        card.addEventListener('dragend', function(){ card.classList.remove('dragging'); });
+        card.addEventListener('dragover', function(e){ e.preventDefault(); });
+        card.addEventListener('drop', function(e){
+          e.preventDefault(); e.stopPropagation();
+          var from = +e.dataTransfer.getData('text/fxitem');
+          if (!from || from === id) return;
+          var items = b.items;
+          var fi = items.indexOf(from), ti = items.indexOf(id);
+          if (fi<0||ti<0) return;
+          items.splice(fi,1); items.splice(ti,0,from);
+          save(); renderGrid(); App.toast(FX.t('col_ordered'));
+        });
+
+        var thumb = card.querySelector('.thumb');
+        var acts = thumb && thumb.querySelector('.hover-actions');
+        if (!acts || acts.querySelector('[data-fxout]')) return;
+
+        var out = document.createElement('button');
+        out.className = 'act'; out.dataset.fxout = id; out.title = FX.t('col_remove');
+        out.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h12M12 6v12" stroke-linecap="round" transform="rotate(45 12 12)"/></svg>';
+        out.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          var i = b.items.indexOf(id); if (i>=0) b.items.splice(i,1);
+          save(); renderTabs(); renderGrid(); App.toast(FX.t('col_removed'));
+        });
+        acts.appendChild(out);
+
+        var mv = document.createElement('button');
+        mv.className = 'act'; mv.title = FX.t('col_move');
+        mv.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h10l-2-2m2 2l-2 2M20 17H10l2-2m-2 2l2 2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        mv.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          openMoveMenu(mv, id);
+        });
+        acts.appendChild(mv);
+      });
+    }
+
+    function openMoveMenu(anchor, id){
+      closeAnyMenu();
+      var others = B.boards.filter(function(x){ return x.id !== B.active; });
+      var menu = document.createElement('div');
+      menu.className = 'menu open';
+      menu.innerHTML = '<div class="mh">' + FX.esc(FX.t('col_move')) + '</div>'
+        + (others.length ? others.map(function(x){ return '<button data-b="' + x.id + '">' + FX.esc(x.name) + '</button>'; }).join('')
+                         : '<div class="fx-note" style="padding:8px 12px">' + FX.esc(FX.t('col_no_others')) + '</div>')
+        + '<div class="sep"></div><button data-new="1">' + FX.esc(FX.t('col_move_new')) + '</button>';
+      document.body.appendChild(menu);
+      var r = anchor.getBoundingClientRect();
+      menu.style.position='fixed';
+      menu.style.top = Math.min(r.bottom + 8, window.innerHeight - menu.offsetHeight - 12) + 'px';
+      menu.style.left = Math.max(12, Math.min(r.left - 150, window.innerWidth - menu.offsetWidth - 12)) + 'px';
+      window.__fxMenu = menu;
+      menu.addEventListener('click', function(e){
+        var b = e.target.closest('[data-b]');
+        var nw = e.target.closest('[data-new]');
+        if (b){
+          var t = B.boards.find(function(x){ return x.id===b.dataset.b; });
+          var cur = board(); var i = cur.items.indexOf(id);
+          if (i>=0) cur.items.splice(i,1);
+          if (t && t.items.indexOf(id)<0) t.items.push(id);
+          save(); renderTabs(); renderGrid(); closeAnyMenu(); App.toast(FX.tf('col_moved', { name: (t?t.name:'') }));
+        } else if (nw){
+          var name = prompt(FX.t('col_prompt_new_move'), FX.t('col_new_name')); if (!name){ return; }
+          var nid = 'b'+Date.now();
+          B.boards.push({ id:nid, name:name.trim()||FX.t('col_new_name'), items:[id] });
+          var cur2 = board(); var j = cur2.items.indexOf(id); if (j>=0) cur2.items.splice(j,1);
+          save(); renderTabs(); renderGrid(); closeAnyMenu(); App.toast(FX.t('col_new_moved'));
+        }
+      });
+    }
+    function closeAnyMenu(){ if (window.__fxMenu){ window.__fxMenu.remove(); window.__fxMenu=null; } }
+    document.addEventListener('click', function(e){
+      if (window.__fxMenu && !window.__fxMenu.contains(e.target) && !e.target.closest('.act')) closeAnyMenu();
     });
-    const blob = new Blob([lines.join('\n')], { type:'text/markdown' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = board.name + '.md'; a.click();
-    App.toast('已导出 Markdown');
-  });
 
-  function renderGrid(){
-    const board = B.boards.find(x => x.id === B.active) || B.boards[0];
-    const items = board.items.map(id => App.findSample(id)).filter(Boolean);
-    if (!items.length){ $('#favGrid').innerHTML = ''; $('#favEmpty').style.display = 'block'; return; }
-    $('#favEmpty').style.display = 'none';
-    App.renderCards(items, $('#favGrid'));
+    /* ---------- 工具条 ---------- */
+    document.getElementById('newBoardBtn').addEventListener('click', function(){
+      var name = prompt(FX.t('col_prompt_new'), FX.t('col_new_name')); if (!name) return;
+      var id = 'b' + Date.now();
+      B.boards.push({ id:id, name:name.trim()||FX.t('col_new_name'), items:[] });
+      B.active = id; save(); renderTabs(); renderGrid(); App.toast(FX.t('col_created'));
+    });
+    document.getElementById('colRenameBtn').addEventListener('click', function(){ renameBoard(B.active); });
+    document.getElementById('colDupBtn').addEventListener('click', function(){
+      var b = board();
+      B.boards.push({ id:'b'+Date.now(), name:b.name+FX.t('col_suffix_copy'), items:b.items.slice() });
+      save(); renderTabs(); App.toast(FX.t('col_duped'));
+    });
+    document.getElementById('colClearBtn').addEventListener('click', function(){
+      var b = board(); if (!b.items.length){ App.toast(FX.t('col_already_empty')); return; }
+      if (!confirm(FX.tf('col_confirm_clear', { name: b.name, n: b.items.length }))) return;
+      b.items = []; save(); renderTabs(); renderGrid(); App.toast(FX.t('col_cleared'));
+    });
+    document.getElementById('colDelBtn').addEventListener('click', function(){
+      if (B.boards.length <= 1){ App.toast(FX.t('col_need_one')); return; }
+      var b = board();
+      if (!confirm(FX.tf('col_confirm_del', { name: b.name }))) return;
+      B.boards = B.boards.filter(function(x){ return x.id !== b.id; });
+      B.active = B.boards[0].id; save(); renderTabs(); renderGrid(); App.toast(FX.t('col_deleted'));
+    });
+    document.getElementById('colDownloadBtn').addEventListener('click', function(){
+      FX.downloadBoardImages(board(), this);
+    });
+
+    function exportMenu(anchor, targetBoards, label){
+      closeAnyMenu();
+      var menu = document.createElement('div');
+      menu.className = 'menu open';
+      menu.innerHTML = '<div class="mh">' + FX.esc(label) + '</div>'
+        + '<button data-x="md">' + FX.esc(FX.t('exp_md')) + '</button>'
+        + '<button data-x="json">' + FX.esc(FX.t('exp_json')) + '</button>'
+        + '<button data-x="csv">' + FX.esc(FX.t('exp_csv')) + '</button>'
+        + '<div class="sep"></div><button data-x="copy">' + FX.esc(FX.t('exp_copy')) + '</button>';
+      document.body.appendChild(menu);
+      var r = anchor.getBoundingClientRect();
+      menu.style.position='fixed';
+      menu.style.top = Math.min(r.bottom + 8, window.innerHeight - menu.offsetHeight - 12) + 'px';
+      menu.style.left = Math.max(12, Math.min(r.left, window.innerWidth - menu.offsetWidth - 12)) + 'px';
+      window.__fxMenu = menu;
+      menu.addEventListener('click', function(e){
+        var btn = e.target.closest('[data-x]'); if (!btn) return;
+        var k = btn.dataset.x;
+        // 合并多合集
+        var merged = { id:'merged', name:label, items:[] };
+        targetBoards.forEach(function(b){ b.items.forEach(function(id){ if (merged.items.indexOf(id)<0) merged.items.push(id); }); });
+        if (k==='md') FX.downloadBlob(FX.boardToMD(B, merged), merged.name + '.md', 'text/markdown;charset=utf-8');
+        else if (k==='json') FX.downloadBlob(FX.boardToJSON(merged), merged.name + '.json', 'application/json;charset=utf-8');
+        else if (k==='csv') FX.downloadBlob(FX.boardToCSV(merged), merged.name + '.csv', 'text/csv;charset=utf-8');
+        else if (k==='copy'){
+          var txt = merged.items.map(function(id){ return App.findSample(id); }).filter(Boolean).map(function(s){ return s.prompt||''; }).join('\n\n---\n\n');
+          App.copyText(txt);
+        }
+        closeAnyMenu();
+      });
+    }
+    document.getElementById('colExportBtn').addEventListener('click', function(){ exportMenu(this, [board()], board().name); });
+    document.getElementById('embedExportAll').addEventListener('click', function(){ exportMenu(this, B.boards, FX.t('exp_all_label')); });
+
+    document.getElementById('colImportBtn').addEventListener('click', function(){ fileIn.click(); });
+    fileIn.addEventListener('change', function(){
+      var f = fileIn.files && fileIn.files[0]; if (!f) return;
+      var rd = new FileReader();
+      rd.onload = function(){
+        FX.importJSON(String(rd.result));
+        B = FX.loadBoards();
+        renderTabs(); renderGrid();
+      };
+      rd.readAsText(f); fileIn.value='';
+    });
+
+    renderTabs(); renderGrid();
+    App.ensureFull();
+    window.__onFullLoaded = function(){ renderGrid(); };
   }
-  renderTabs(); renderGrid();
-  // 全文导出需要 prompt，确保完整数据已载入
-  App.ensureFull();
-}});
+
+  if (window.FX) start();
+  else window.addEventListener('sx:ready', start, { once:true });
+})();
 </script>
 </body>
 </html>

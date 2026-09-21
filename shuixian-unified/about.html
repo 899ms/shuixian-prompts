@@ -6,8 +6,11 @@
 <title>关于 · 水仙的AI提示词</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://r2.qqsrc.com" crossorigin>
+<link rel="dns-prefetch" href="https://r2.qqsrc.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=2">
+<link rel="stylesheet" href="css/base.css?v=12">
+<link rel="stylesheet" href="css/features.css?v=12">
 <style>
 .prose{max-width:760px;margin:0 auto;line-height:1.9;color:var(--ink-2);font-size:15.5px}
 .prose h2{font-family:var(--serif);font-size:24px;margin:34px 0 12px;color:var(--ink)}
@@ -21,48 +24,52 @@
 .stat-row .s b{display:block;font-family:var(--serif);font-size:30px;color:var(--garden)}
 .stat-row .s span{color:var(--muted);font-size:13px}
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2C8CAB">
 </head>
 <body data-page="about">
 <main>
   <div class="page-head"><div class="shell" style="text-align:center">
-    <p class="eyebrow">About</p>
-    <h1>关于水仙的提示词花园</h1>
-    <p class="sub">一个慢慢长起来的中文 AI 图像提示词合集</p>
+    <p data-i18n="ab_eyebrow" class="eyebrow">About</p>
+    <h1 data-i18n="ab_h1">关于水仙的提示词花园</h1>
+    <p data-i18n="ab_sub" class="sub">一个慢慢长起来的中文 AI 图像提示词合集</p>
   </div></div>
 
   <section class="sec"><div class="shell">
     <div class="prose">
-      <p class="lead">「水仙的AI提示词」是一个持续收集、整理的中文 AI 图像生成提示词花园。我们把散落在各处的好句子按主题分门别类，让想出图的人能更快找到合适的那一句话。</p>
+      <p data-i18n="ab_lead" class="lead">「水仙的AI提示词」是一个持续收集、整理的中文 AI 图像生成提示词花园。我们把散落在各处的好句子按主题分门别类，让想出图的人能更快找到合适的那一句话。</p>
 
       <div class="stat-row">
-        <div class="s"><b>5,452</b><span>精选提示词</span></div>
-        <div class="s"><b>12</b><span>大分类</span></div>
-        <div class="s"><b>79</b><span>小分类</span></div>
+        <div class="s"><b>5,452</b><span data-i18n="idx_stat_prompts">精选提示词</span></div>
+        <div class="s"><b>12</b><span data-i18n="idx_stat_majors">大分类</span></div>
+        <div class="s"><b>79</b><span data-i18n="idx_stat_subs">小分类</span></div>
       </div>
 
-      <h2>我们做了什么</h2>
-      <p>提示词是和 AI 绘画模型沟通的语言。一句好的提示词，往往决定了出图的质量和风格。我们从大量实践里筛选出表达清晰、可复用、风格鲜明的提示词，并为每条标注了分类与预览图，方便你按场景检索。</p>
+      <h2 data-i18n="ab_h2_what">我们做了什么</h2>
+      <p data-i18n="ab_p_what">提示词是和 AI 绘画模型沟通的语言。一句好的提示词，往往决定了出图的质量和风格。我们从大量实践里筛选出表达清晰、可复用、风格鲜明的提示词，并为每条标注了分类与预览图，方便你按场景检索。</p>
       <ul>
-        <li><b>按主题聚合</b>：人物写真、动漫二次元、海报广告、插画艺术、产品电商、游戏、建筑空间、车辆机械 3D、随手拍、晓兰 等 12 大类。</li>
-        <li><b>可直接复制</b>：点开任意卡片即可查看完整提示词，一键复制使用。</li>
-        <li><b>本地收藏</b>：支持多画板收藏，无需登录，存在你自己的浏览器里。</li>
+        <li data-i18n="ab_li1"><b>按主题聚合</b>：人物写真、动漫二次元、海报广告、插画艺术、产品电商、游戏、建筑空间、车辆机械 3D、随手拍、晓兰 等 12 大类。</li>
+        <li data-i18n="ab_li2"><b>可直接复制</b>：点开任意卡片即可查看完整提示词，一键复制使用。</li>
+        <li data-i18n="ab_li3"><b>本地收藏</b>：支持多画板收藏，无需登录，存在你自己的浏览器里。</li>
       </ul>
 
-      <h2>图片与版权</h2>
-      <p>所有预览图托管于 Cloudflare R2 公共存储，仅用于提示词效果展示。提示词与图片版权归原作者所有，本站点仅作整理与展示，<b>仅供学习交流，请勿用于商业用途</b>。</p>
+      <h2 data-i18n="ab_h2_rights">图片与版权</h2>
+      <p data-i18n="ab_p_rights">所有预览图托管于 Cloudflare R2 公共存储，仅用于提示词效果展示。提示词与图片版权归原作者所有，本站点仅作整理与展示，<b>仅供学习交流，请勿用于商业用途</b>。</p>
 
-      <h2 id="contact">联系我们</h2>
-      <p>想投稿好提示词、纠错、或者聊聊想法？欢迎通过以下方式找到我们：</p>
+      <h2 data-i18n="ab_h2_contact" id="contact">联系我们</h2>
+      <p data-i18n="ab_p_contact">想投稿好提示词、纠错、或者聊聊想法？欢迎通过以下方式找到我们：</p>
       <ul>
-        <li>微信公众号：<b>水仙的AI提示词</b>（首页扫码关注）</li>
-        <li>投稿入口：<a href="submit.html">立即投稿</a></li>
-        <li>支持作者：<a href="sponsor.html">赞赏一下</a></li>
+        <li data-i18n="ab_li_c1">微信公众号：<b>水仙的AI提示词</b>（首页扫码关注）</li>
+        <li data-i18n="ab_li_c2">投稿入口：<a data-i18n="idx_cta1_btn" href="submit.html">立即投稿</a></li>
+        <li data-i18n="ab_li_c3">支持作者：<a href="sponsor.html">赞赏一下</a></li>
       </ul>
-      <p style="color:var(--muted);font-size:13px;margin-top:24px">© 2026 水仙的AI提示词 · 用 ❤ 与一点点蓝意做成</p>
+      <p data-i18n="ab_footer" style="color:var(--muted);font-size:13px;margin-top:24px">© 2026 水仙的AI提示词 · 用 ❤ 与一点点蓝意做成</p>
     </div>
   </div></section>
 </main>
-<script src="js/base.js?v=2"></script>
+<script src="js/base.js?v=12"></script>
+<script src="js/i18n.js?v=12"></script>
+<script src="js/features.js?v=12"></script>
 <script>App.init({ page:'about' });</script>
 </body>
 </html>

@@ -1,0 +1,287 @@
+/* =========================================================
+   水仙 · 提示词花园 — features.css
+   新增功能层样式（变量填空 / 命令面板 / 标签分面 / 合集管理 /
+   备注 / 导出菜单 / 筛选工具栏 / LQIP / i18n …）
+   一律沿用 base.css 的设计变量，兼容深浅色与三档断点。
+   ========================================================= */
+
+/* ---------- 顶栏工具按钮 ---------- */
+.nav-tools{display:flex;align-items:center;gap:10px}
+.tool-btn{display:inline-flex;align-items:center;gap:7px;height:42px;padding:0 14px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink-2);font-size:13px;font-weight:600;
+  box-shadow:var(--shadow-sm);transition:.18s;white-space:nowrap}
+.tool-btn:hover{color:var(--garden);border-color:var(--garden);transform:translateY(-1px)}
+.tool-btn kbd{font:inherit;font-size:11px;padding:2px 6px;border-radius:6px;background:var(--surface-2);
+  border:1px solid var(--line);color:var(--muted)}
+.tool-btn.icon-only{width:42px;padding:0;justify-content:center}
+
+/* ---------- 导航布局 ----------
+   导航搜索框已移除（搜索改由命令面板承担）。
+   这里只保证：链接不换行不被压缩，右侧工具区稳定靠右。 */
+.sx-nav-inner{gap:18px}
+.nav-links{flex:none}
+.nav-links a{white-space:nowrap}
+.nav-actions{flex:none;gap:9px;margin-left:auto}
+/* 移动端菜单里的命令面板入口：桌面隐藏 */
+#mobilePaletteBtn{display:none}
+/* 仅移动端显示 / 仅桌面端显示 —— 手机端顶栏只留「语言 / 版本 / 主题」，其余收进汉堡菜单 */
+.only-mobile{display:none !important}
+@keyframes fxMenuIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@media(max-width:1000px){
+  /* 手机端顶栏：右侧只保留 语言 / 版本 / 主题 三个圆形按钮，一行放得下。
+     命令面板入口改用文字按钮收进汉堡菜单里（避免桌面的搜索图标在手机上演成第 4 个按钮）。 */
+  .nav-actions{gap:8px}
+  .nav-actions .only-desktop{display:none !important}
+  #openPaletteBtn{display:none !important}
+  .nav-actions .tool-btn.lang-btn{display:inline-flex !important}
+  /* 语言按钮：与主题按钮等大的圆形（文字 "EN" / "中"），不再被 1040px 断点藏掉 */
+  .tool-btn.icon-only.lang-btn{
+    width:42px;height:42px;padding:0;border-radius:999px;
+    font-size:13px;font-weight:800;letter-spacing:.02em;gap:0}
+  /* 版本按钮收成圆形图标，省掉最占宽度的文字 */
+  .nav-actions .skin-switch{
+    width:42px;height:42px;padding:0;border-radius:999px;flex:none;
+    font-size:0;color:transparent;background:var(--surface);border:1px solid var(--line)}
+  .nav-actions .skin-switch::after{
+    content:'⇄';font-size:17px;font-weight:700;color:var(--ink-2);
+    display:block;text-align:center;line-height:1}
+  .nav-actions .skin-switch:hover{border-color:var(--garden)}
+  .nav-actions .skin-switch:hover::after{color:var(--garden)}
+
+  /* 菜单里的新增项：投稿 / 收藏 / 命令面板 */
+  .nav-links.open .only-mobile{display:flex !important}
+  .nav-links.open{animation:fxMenuIn .2s var(--ease)}
+  /* base.css 的 .nav-links 带 align-items:center，展开为纵向列时会把每一项水平居中；
+     这里改为拉伸，菜单项统一左对齐。 */
+  .nav-links.open{align-items:stretch;max-height:calc(100vh - var(--nav-h));overflow:auto}
+  .nav-links.open a,
+  .nav-links.open button{text-align:left;width:100%;justify-content:flex-start}
+  .nav-links.open .only-mobile{
+    background:none;border:none;font:inherit;font-size:14.5px;cursor:pointer;
+    padding:12px 14px;border-radius:12px;color:var(--ink-2)}
+  .nav-links.open .only-mobile:hover{background:var(--surface-2);color:var(--ink)}
+  /* 投稿做成菜单里的强调项（沿用 .btn-amber 的渐变） */
+  .nav-links.open #mobileSubmitLink{
+    margin-top:6px;justify-content:center;text-align:center;font-weight:700;
+    background:linear-gradient(135deg,var(--daffodil),var(--garden));
+    color:#fff;box-shadow:0 8px 22px rgba(31,106,133,.28)}
+  .nav-links.open #mobileSubmitLink:hover{color:#fff;filter:brightness(1.04)}
+}
+/* 超小屏：三个圆钮再收一点，确保不断行 */
+@media(max-width:420px){
+  .nav-actions{gap:6px}
+  .sx-nav-inner{gap:10px;padding:0 16px}
+  .brand{font-size:16px;gap:8px}
+  .brand .mark{width:30px;height:30px}
+  .brand .mark svg{width:19px;height:19px}
+  .tool-btn.icon-only{width:38px;height:38px}
+  .nav-actions .skin-switch{width:38px;height:38px}
+  .tool-btn.icon-only.lang-btn{width:38px;height:38px}
+  #openPaletteBtn{padding:0 10px}
+  #openPaletteBtn kbd{display:none}
+}
+
+/* 逐档收紧：缩间距 → 缩链接内边距 → 隐副标题 → 隐命令面板文字 → 隐语言按钮 → 隐 ⌘K → 汉堡菜单 */
+@media(max-width:1366px){ .sx-nav-inner{gap:14px} }
+@media(max-width:1280px){ .nav-links a{padding:8px 11px;font-size:14px} .nav-actions{gap:8px} }
+@media(max-width:1200px){ .brand small{display:none} }
+@media(max-width:1120px){ #openPaletteBtn .tlabel{display:none} #openPaletteBtn{padding:0 12px} }
+@media(max-width:1040px){ .tool-btn.lang-btn{display:none} }
+@media(max-width:920px){ #openPaletteBtn kbd{display:none} }
+
+/* ---------- 通用遮罩 / 弹层 ---------- */
+.fx-overlay{position:fixed;inset:0;z-index:210;display:none;align-items:center;justify-content:center;padding:24px}
+.fx-overlay.open{display:flex;animation:fxIn .2s var(--ease)}
+@keyframes fxIn{from{opacity:0}to{opacity:1}}
+.fx-backdrop{position:absolute;inset:0;background:rgba(10,16,20,.55);backdrop-filter:blur(6px)}
+.fx-panel{position:relative;z-index:2;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:min(720px,100%);
+  max-height:88vh;display:flex;flex-direction:column;overflow:hidden;animation:fxUp .26s var(--ease)}
+@keyframes fxUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.fx-head{display:flex;align-items:flex-start;gap:14px;padding:22px 24px 14px;border-bottom:1px solid var(--line)}
+.fx-head h3{font-family:var(--serif);font-weight:900;font-size:20px;margin:0;line-height:1.35}
+.fx-head .sub{color:var(--muted);font-size:12.5px;margin:5px 0 0}
+.fx-head .x{margin-left:auto;flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  color:var(--muted);transition:.18s}
+.fx-head .x:hover{color:var(--coral);background:var(--surface-2);transform:rotate(90deg)}
+.fx-body{padding:20px 24px;overflow:auto;flex:1}
+.fx-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:16px 24px;
+  border-top:1px solid var(--line);background:var(--surface-2)}
+.fx-foot .spacer{flex:1}
+.fx-note{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* ---------- 变量填空 ---------- */
+.vf-fields{display:flex;flex-direction:column;gap:14px}
+.vf-field{display:flex;flex-direction:column;gap:7px}
+.vf-field label{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.vf-field .key{font-family:"DM Mono",ui-monospace,monospace;font-size:11.5px;color:var(--garden);
+  background:var(--garden-050);padding:2px 8px;border-radius:6px;font-weight:600}
+.vf-field input,.vf-field textarea{padding:11px 14px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14px;font-family:inherit;transition:.18s}
+.vf-field input:focus,.vf-field textarea:focus{border-color:var(--garden);box-shadow:0 0 0 4px var(--garden-050);outline:none}
+.vf-preview{margin-top:18px}
+.vf-preview .lbl{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.vf-preview pre{margin:0;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;
+  padding:14px 16px;font-family:"DM Mono",ui-monospace,monospace;font-size:12.5px;line-height:1.7;
+  color:var(--ink);white-space:pre-wrap;word-break:break-word;max-height:220px;overflow:auto}
+.vf-preview pre .fill{background:var(--daffodil-050);color:#1F6A85;border-radius:4px;padding:0 4px;font-weight:700}
+.vf-preview pre .empty{background:transparent;color:var(--coral);border-bottom:1px dashed var(--coral);padding:0}
+[data-theme="dark"] .vf-preview pre .fill{color:var(--daffodil)}
+
+/* ---------- 命令面板 ---------- */
+.cmdk{align-items:flex-start;padding-top:10vh}
+.cmdk .fx-panel{width:min(640px,100%);max-height:70vh}
+.cmdk-input{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.cmdk-input svg{flex:none;color:var(--muted)}
+.cmdk-input input{flex:1;border:none;outline:none;background:transparent;color:var(--ink);font-size:16px;font-family:inherit}
+.cmdk-input .esc{font-size:11px;padding:3px 8px;border-radius:6px;background:var(--surface-2);
+  border:1px solid var(--line);color:var(--muted);flex:none}
+.cmdk-list{overflow:auto;padding:8px;flex:1}
+.cmdk-sec{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  padding:12px 14px 6px}
+.cmdk-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:11px 14px;
+  border-radius:12px;transition:.14s;color:var(--ink)}
+.cmdk-item .ico{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+  background:var(--surface-2);font-size:15px}
+.cmdk-item .tx{min-width:0;flex:1}
+.cmdk-item .t1{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmdk-item .t2{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmdk-item.on,.cmdk-item:hover{background:var(--garden-050)}
+.cmdk-item.on .t1,.cmdk-item:hover .t1{color:var(--garden)}
+.cmdk-foot{padding:10px 18px;border-top:1px solid var(--line);display:flex;gap:14px;flex-wrap:wrap;
+  font-size:11.5px;color:var(--muted);background:var(--surface-2)}
+.cmdk-foot kbd{font:inherit;padding:1px 6px;border-radius:5px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);margin-right:4px}
+@media(max-width:600px){.cmdk{padding:0}.cmdk .fx-panel{max-height:100vh;height:100%;border-radius:0}}
+
+/* ---------- 标签 / 分面 ---------- */
+.facets{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;box-shadow:var(--shadow-sm);margin-bottom:20px}
+.facets .frow{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.facets .frow:last-child{border-bottom:none}
+.facets .flabel{flex:none;width:74px;font-size:12px;font-weight:800;color:var(--muted);
+  letter-spacing:.04em;padding-top:8px;display:flex;align-items:center;gap:6px}
+.facets .fopts{display:flex;flex-wrap:wrap;gap:8px;flex:1;min-width:0}
+.facet-chip{padding:6px 13px;border-radius:999px;background:var(--surface);border:1px solid var(--line);
+  font-size:12.5px;font-weight:600;color:var(--ink-2);transition:.16s;box-shadow:var(--shadow-sm)}
+.facet-chip:hover{border-color:var(--garden);color:var(--garden)}
+.facet-chip.on{background:var(--garden);border-color:var(--garden);color:#fff}
+.facet-chip .n{opacity:.62;margin-left:5px;font-weight:500;font-size:11px}
+.facet-chip.more{color:var(--muted);border-style:dashed}
+.facets .fclear{flex:none;align-self:flex-start;margin-top:6px;font-size:12.5px;font-weight:700;color:var(--garden)}
+.facets .fclear:hover{text-decoration:underline}
+@media(max-width:760px){
+  .facets .frow{flex-direction:column;gap:8px}
+  .facets .flabel{width:auto;padding-top:0}
+}
+
+/* 卡片上的标签角标 */
+.card .tagline{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.card .tagline span{font-size:10.5px;padding:2px 8px;border-radius:999px;background:var(--surface-2);
+  color:var(--muted);font-weight:600}
+.card .note-dot{position:absolute;top:12px;right:12px;z-index:3;width:8px;height:8px;border-radius:50%;
+  background:var(--daffodil);box-shadow:0 0 0 3px rgba(79,179,201,.25)}
+
+/* ---------- 搜索高亮 ---------- */
+mark.hl{background:var(--daffodil-050);color:#1F6A85;border-radius:4px;padding:0 3px;font-weight:700}
+[data-theme="dark"] mark.hl{color:var(--daffodil)}
+.hl-legend{font-size:12px;color:var(--muted);margin:-8px 0 16px}
+.hl-legend b{color:var(--garden)}
+
+/* ---------- 筛选工具栏 ---------- */
+.filter-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.filter-bar .fb-label{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2);
+  padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);
+  box-shadow:var(--shadow-sm);transition:.16s}
+.switch:hover{border-color:var(--garden);color:var(--garden)}
+.switch.on{background:var(--garden);border-color:var(--garden);color:#fff}
+.switch .dot{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;flex:none;
+  display:grid;place-items:center}
+.switch.on .dot::after{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ---------- 合集 / 画板管理 ---------- */
+.col-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+.col-tabs{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.col-tab{position:relative;display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--line);font-weight:600;font-size:14px;color:var(--ink-2);
+  box-shadow:var(--shadow-sm);transition:.16s;cursor:grab}
+.col-tab.active{background:var(--garden);border-color:var(--garden);color:#fff}
+.col-tab.drag-over{outline:2px dashed var(--garden);outline-offset:3px}
+.col-tab .n{opacity:.65;font-weight:500;font-size:12px}
+.col-tab .x{opacity:0;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:12px;
+  background:rgba(0,0,0,.12);transition:.16s}
+.col-tab:hover .x{opacity:1}
+.col-tools{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 22px}
+.col-tools .btn{padding:9px 16px;font-size:13px}
+.col-item{position:relative}
+.col-item .drag{cursor:grab}
+.col-item.dragging{opacity:.45}
+.col-item .move-menu{position:absolute;inset:auto 0 0 0;z-index:4}
+
+/* 通用下拉菜单 */
+.menu{position:absolute;z-index:5;min-width:190px;background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;box-shadow:var(--shadow-lg);padding:6px;display:none}
+.menu.open{display:block;animation:fxUp .16s var(--ease)}
+.menu button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 12px;
+  border-radius:10px;font-size:13.5px;font-weight:600;color:var(--ink);transition:.14s}
+.menu button:hover{background:var(--garden-050);color:var(--garden)}
+.menu button.danger:hover{background:rgba(226,85,106,.1);color:var(--coral)}
+.menu .sep{height:1px;background:var(--line);margin:5px 8px}
+.menu .mh{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;
+  padding:8px 12px 4px}
+
+/* 锚定菜单容器 */
+.menu-wrap{position:relative;display:inline-block}
+
+/* ---------- 备注 ---------- */
+.note-box{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.note-box .nh{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:var(--muted);
+  letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.note-box textarea{width:100%;min-height:74px;resize:vertical;border:1px solid var(--line);border-radius:10px;
+  padding:10px 12px;background:var(--surface);color:var(--ink);font-family:inherit;font-size:13.5px;
+  line-height:1.6}
+.note-box textarea:focus{border-color:var(--garden);box-shadow:0 0 0 4px var(--garden-050);outline:none}
+.note-box .meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;
+  font-size:12px;color:var(--muted)}
+
+/* ---------- 复制 / 下载 按钮组 ---------- */
+.act-bar{display:flex;gap:8px;flex-wrap:wrap}
+.mini-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);font-size:12.5px;font-weight:600;color:var(--ink-2);
+  box-shadow:var(--shadow-sm);transition:.16s}
+.mini-btn:hover{border-color:var(--garden);color:var(--garden);transform:translateY(-1px)}
+.mini-btn.solid{background:var(--garden);border-color:var(--garden);color:#fff}
+.mini-btn.solid:hover{background:var(--garden-600);color:#fff}
+.mini-btn[disabled]{opacity:.5;pointer-events:none}
+
+/* ---------- LQIP 图片加载 ---------- */
+.ph-img.lqip{filter:blur(14px);transform:scale(1.04);transition:filter .5s var(--ease),transform .5s var(--ease)}
+.ph-img.lqip.done{filter:none;transform:none}
+.ph.shimmer::before{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.28) 50%,transparent 80%);
+  background-size:220% 100%;animation:shimmer 1.5s linear infinite}
+@keyframes shimmer{from{background-position:180% 0}to{background-position:-80% 0}}
+@media(prefers-reduced-motion:reduce){.ph.shimmer::before{animation:none}}
+
+/* ---------- 语言切换 ---------- */
+.lang-btn{font-size:12px;font-weight:800;letter-spacing:.04em}
+
+/* ---------- 随机漫游按钮 ---------- */
+.dice-btn{position:fixed;right:22px;bottom:22px;z-index:40;width:52px;height:52px;border-radius:50%;
+  display:grid;place-items:center;background:linear-gradient(135deg,var(--garden),var(--garden-600));
+  color:#fff;box-shadow:var(--shadow-lg);transition:.22s;font-size:21px}
+.dice-btn:hover{transform:translateY(-3px) rotate(-8deg)}
+@media(max-width:600px){.dice-btn{right:14px;bottom:14px;width:46px;height:46px;font-size:19px}}
+
+/* ---------- 快捷键帮助 ---------- */
+.kbd-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+.kbd-grid .r{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13.5px;
+  color:var(--ink-2);padding:8px 0;border-bottom:1px dashed var(--line)}
+.kbd-grid kbd{font:inherit;font-size:11.5px;padding:3px 8px;border-radius:7px;background:var(--surface-2);
+  border:1px solid var(--line);color:var(--ink-2);font-weight:700;white-space:nowrap}
+@media(max-width:600px){.kbd-grid{grid-template-columns:1fr}}
+
+/* ---------- 轻提示（复用 toast，追加图标位） ---------- */
+.toast.rich{display:flex;align-items:center;gap:9px}
+.toast .tact{color:var(--garden);font-weight:800;text-decoration:underline}

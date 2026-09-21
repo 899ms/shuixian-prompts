@@ -6,68 +6,105 @@
 <title>搜索 · 水仙的AI提示词</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://r2.qqsrc.com" crossorigin>
+<link rel="dns-prefetch" href="https://r2.qqsrc.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=2">
+<link rel="stylesheet" href="css/base.css?v=12">
+<link rel="stylesheet" href="css/features.css?v=12">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2C8CAB">
 </head>
 <body data-page="search">
 <main>
   <section class="search-hero"><div class="shell">
-    <p class="eyebrow">Search</p>
-    <h1 class="serif" style="font-size:clamp(28px,4vw,42px);font-weight:900;margin:0">搜你喜欢的那一句</h1>
+    <p data-i18n="se_eyebrow" class="eyebrow">Search</p>
+    <h1 data-i18n="se_h1" class="serif" style="font-size:clamp(28px,4vw,42px);font-weight:900;margin:0">搜你喜欢的那一句</h1>
     <div class="big-search">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M16 16L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <input id="bigSearch" type="text" placeholder="试试「赛博朋克」「角色立绘」「电影感」…" autocomplete="off">
-      <button class="btn btn-primary" id="goBtn">搜索</button>
+      <input id="bigSearch" type="text" placeholder="试试「赛博朋克」「角色立绘」「电影感」，也支持拼音缩写 sbpk…" data-i18n-placeholder="se_ph" autocomplete="off">
+      <button data-i18n="nav_search" class="btn btn-primary" id="goBtn">搜索</button>
     </div>
-    <div class="recent-row" id="recentRow"><span class="lbl">最近搜索</span></div>
-    <div class="recent-row" id="hotRow"><span class="lbl">大家都在搜</span></div>
+    <div class="recent-row" id="recentRow"><span data-i18n="se_recent" class="lbl">最近搜索</span></div>
+    <div class="recent-row" id="hotRow"><span data-i18n="se_hot" class="lbl">大家都在搜</span></div>
+    <div class="recent-row"><span data-i18n="se_tags" class="lbl">按标签逛</span><span id="tagQuick"></span></div>
   </div></section>
 
   <section class="sec" style="padding-top:24px"><div class="shell">
+    <div id="fxFacetHost"></div>
     <div class="gallery-bar">
-      <span class="count" id="resultCount">输入关键词开始搜索</span>
+      <span class="count" id="resultCount" data-i18n="se_placeholder_count">输入关键词开始搜索</span>
       <span class="spacer"></span>
-      <select class="sort-select" id="sortSel"><option value="latest">最新</option><option value="hot">最热</option></select>
+      <select class="sort-select" id="sortSel"><option data-i18n="gal_sort_latest" value="latest">最新</option><option data-i18n="gal_sort_hot" value="hot">最热</option><option data-i18n="se_sort_rel" value="rel">相关度</option></select>
     </div>
+    <div class="hl-legend" id="hlLegend" style="display:none"></div>
     <div class="masonry" id="grid"></div>
     <div class="empty" id="empty" style="display:none"><div class="big">🔍</div>没有匹配的提示词，换个关键词试试。</div>
   </div></section>
 </main>
-<script src="js/base.js?v=2"></script>
+<script src="js/base.js?v=12"></script>
+<script src="js/i18n.js?v=12"></script>
+<script src="js/features.js?v=12"></script>
 <script>
 App.init({ page:'search', onReady:function(){
   const D = App.D;
   const REC_KEY = 'sx-recent-v2';
   const big = $('#bigSearch');
   const params = new URLSearchParams(location.search);
-  let state = { q: params.get('q') || '', sort:'latest' };
+  let state = { q: params.get('q') || '', sort:'rel' };
+  let ranked = null;   // 相关度排序时的顺序缓存
 
+  /* ---------- 最近搜索 ---------- */
   function getRecent(){ try { return JSON.parse(localStorage.getItem(REC_KEY)) || []; } catch(e){ return []; } }
   function addRecent(q){ if(!q) return; let r = getRecent().filter(x => x !== q); r.unshift(q); r = r.slice(0,6); localStorage.setItem(REC_KEY, JSON.stringify(r)); renderRecent(); }
   function renderRecent(){
     const r = getRecent();
-    $('#recentRow').innerHTML = '<span class="lbl">最近搜索</span>' + (r.length ? r.map(x => `<button class="chip" data-q="${x}">${x}</button>`).join('') : '<span style="color:var(--muted);font-size:13px">暂无</span>');
+    $('#recentRow').innerHTML = '<span class="lbl">' + FX.t('se_recent') + '</span>' + (r.length ? r.map(x => `<button class="chip" data-q="${FX.esc(x)}">${FX.esc(x)}</button>`).join('') : '<span style="color:var(--muted);font-size:13px">' + FX.t('se_none') + '</span>');
     $('#recentRow').querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => doSearch(b.dataset.q)));
   }
-  $('#hotRow').innerHTML = '<span class="lbl">大家都在搜</span>' + D.hot.map(x => `<button class="chip" data-q="${x}">${x}</button>`).join('');
+  $('#hotRow').innerHTML = '<span class="lbl">' + FX.t('se_hot') + '</span>' + D.hot.map(x => `<button class="chip" data-q="${FX.esc(x)}">${FX.esc(x)}</button>`).join('');
   $('#hotRow').querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => doSearch(b.dataset.q)));
 
-  function doSearch(q){ big.value = q; state.q = q; addRecent(q); render(); }
+  /* ---------- 快速标签 ---------- */
+  (function(){
+    const quick = ['海报','信息图','赛博朋克','极简','国风','电影感','3D渲染','动漫','人像摄影','卡牌'];
+    $('#tagQuick').innerHTML = quick.map(x => `<button class="chip" data-q="${FX.esc(x)}">${FX.esc(x)}</button>`).join('');
+    $('#tagQuick').querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => doSearch(b.dataset.q)));
+  })();
+
+  /* ---------- 搜索 ---------- */
+  function doSearch(q){ big.value = q; state.q = (q || '').trim(); addRecent(state.q); render(); }
   $('#goBtn').addEventListener('click', () => doSearch(big.value.trim()));
   big.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(big.value.trim()); });
   $('#sortSel').addEventListener('change', e => { state.sort = e.target.value; render(); });
 
   function render(){
-    const q = state.q.toLowerCase();
-    $('#resultCount').textContent = state.q ? '「' + state.q + '」相关结果' : '推荐 · 热门提示词';
-    let list = state.q ? D.samples.filter(s => (s.title + s.category + (s.prompt || '')).toLowerCase().includes(q)) : D.samples.slice().sort((a,b) => b.likes - a.likes);
-    if (state.sort === 'hot') list.sort((a,b) => b.likes - a.likes); else list.sort((a,b) => b.id - a.id);
+    big.value = state.q;
+    $('#resultCount').textContent = state.q ? FX.tf('se_count', { q: state.q }) : FX.t('se_reco');
+    let list;
+    if (state.q){
+      list = FX.smartSearch(D.samples, state.q);
+      ranked = list.map(s => s.id);
+    } else {
+      ranked = null;
+      list = D.samples.slice().sort((a,b) => b.likes - a.likes);
+    }
+    list = FX.applyFilters(list);
+    if (state.sort === 'hot') list.sort((a,b) => b.likes - a.likes);
+    else if (state.sort === 'latest') list.sort((a,b) => b.id - a.id);
+    else if (state.q && ranked) list.sort((a,b) => ranked.indexOf(a.id) - ranked.indexOf(b.id));
     $('#empty').style.display = list.length ? 'none' : 'block';
+    const lg = $('#hlLegend');
+    if (lg){
+      if (state.q && list.length){ lg.style.display='block'; lg.innerHTML = FX.tf('se_hit', { n: list.length }); }
+      else lg.style.display = 'none';
+    }
     App.renderCards(list.slice(0, 48), $('#grid'));
   }
+  window.__fxSearchRefresh = render;
+
   renderRecent(); render();
   App.ensureFull();
-  window.__onFullLoaded = function(){ render(); };
+  window.__onFullLoaded = function(){ FX.clearTagCache(); FX.refreshFacets(); render(); };
 }});
 </script>
 </body>

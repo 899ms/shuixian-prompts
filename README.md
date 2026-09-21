@@ -3,6 +3,7 @@
 **简体中文** · [English](README.en.md)
 
 > 合并版站点（现代 / 经典两套皮肤一键切换）+ 完整提示词数据集：按分类或关键词即搜即得，点开看大图，一键复制提示词。
+> v1.0.2 起支持**变量填空、标签分面、拼音搜索、命令面板、收藏合集、中英双语、PWA 离线**。
 
 **在线站点：** <https://prompt.qqsrc.com/> · 纯静态站点，无需登录 · 收藏数据保存在本地浏览器
 
@@ -24,6 +25,104 @@
 
 > **切换规则**：会尽量停在同一类页面上 —— 首页↔首页、画廊↔画廊、收藏↔收藏；目标版本没有对应页面时回到该版首页。
 > 两套皮肤的主题色都取自站点 `#2B8AAB`，深浅色主题也跟着各自记住。
+
+## 本次更新 · v1.0.2
+
+> 相对上一版（现归档于 `old/shuixian-unified/`）：**新增 13 个文件、11 项功能、3 处修复**。
+> 现有版本号：现代版 `?v=12`、经典版 `?v=38`。
+> 完整技术说明（含实现方式与维护脚本）见 [docs/FEATURES-2026-09-20.md](docs/FEATURES-2026-09-20.md)。
+
+### 1. 变量填空 → 复制成品
+
+数据里 5,430 条提示词有 **2,931 条带可替换参数**（`{argument name="x" default="y"}`）。现在点「✍️ 填变量并复制」会弹出表单：填好每个变量、实时预览里高亮显示填进去的部分，留空的回落到默认值，点「复制成品」拿到的是**能直接用的文本**，不再是一句带占位符的模板。同时保留「复制模板」。
+
+| 变量表单（实时预览 + 高亮） | 灯箱里的入口 |
+| --- | --- |
+| ![变量填空](docs/screenshots/features/07-varfill.png) | ![灯箱](docs/screenshots/features/06-lightbox.png) |
+
+### 2. 标签分面：在 79 个分类之外再加一层
+
+从每条提示词的标题 / 分类 / 正文自动提取三类**横切标签**：**媒介**（海报 / 信息图 / 插画 / 摄影 / 3D渲染 / UI界面 / Logo图标 / 字体排版 / 包装设计 / 漫画分镜 / 卡牌 / 封面）、**风格**（极简 / 赛博朋克 / 复古 / 国风 / 日系 / 电影感 / 杂志风 / 手绘 / 像素 / 构成主义 / 故障艺术 / 蒸汽朋克 / 哥特 / 可爱 / 写实 / 奇幻）、**色调**（黑白 / 高饱和 / 低饱和 / 暖色 / 冷色 / 黑金 / 粉紫 / 绿色系）。带实时计数、可多选（同类内取或、跨类取与）。
+
+| 分面栏（带计数） | 选中后实时过滤 |
+| --- | --- |
+| ![标签分面](docs/screenshots/features/03-facets.png) | ![分面过滤](docs/screenshots/features/04-facet-filtered.png) |
+
+### 3. 智能搜索
+
+- **模糊匹配**：不要求连续，`海报设计` 能命中「设计感海报」
+- **拼音首字母**：输入 `sbpk` 就出「赛博朋克」（基于 1,683 字的拼音表，两套皮肤共用）
+- **关键词高亮**：结果里命中的词用 `<mark>` 标出（已做 HTML 转义）
+- **相关度排序**：排序多一个「相关度」，标题命中优先于正文命中
+
+![智能搜索（拼音 + 高亮）](docs/screenshots/features/05-smart-search.png)
+
+### 4. 命令面板 `Ctrl / ⌘ + K`
+
+一个输入框同时搜「功能 + 分类 + 提示词」：可直接跳页、随机漫游、切主题、切语言、导出合集；也能搜到某条提示词并按回车打开。↑↓ 移动、Enter 打开、Esc 关闭。
+
+![命令面板](docs/screenshots/features/02-command-palette.png)
+
+### 5. 收藏合集（收藏页重写为管理器）
+
+多合集（新建 / 重命名 / 复制 / 删除 / 清空）、**拖拽排序**（合集标签与合集内卡片都可拖）、**跨合集移动**、**导出 Markdown / JSON / CSV**（带 BOM，Excel 直接打开不乱码）、一键复制全部提示词、**导入自己的 JSON**（以 `imp-` 前缀另存，不污染原库）。合集、备注、使用次数都只存在本机浏览器。
+
+![收藏合集管理器](docs/screenshots/features/08-collections.png)
+
+### 6. 筛选项与灯箱增强
+
+- 画廊 / 搜索页工具栏：**只看有图 / 只看有备注 / 仅看已收藏 / 仅看用过的**
+- 灯箱与卡片：**下载图片**（fetch→blob，文件名自动用标题+ID）、**备注**（边打边存，卡片右上角黄点标记）、**标记已用**（累加使用次数）、**复制链接**（`#id=` 深链，打开即自动弹出该条）、**‹ › 翻页**（按当前筛选上下文翻，不是全库乱跳）、**LQIP 加载**（先模糊后清晰）
+
+| 筛选项 | 灯箱（备注 / 使用次数 / 动作条） |
+| --- | --- |
+| ![筛选器](docs/screenshots/features/09-filters.png) | ![灯箱](docs/screenshots/features/06-lightbox.png) |
+
+### 7. 真正的英文版（顶栏 `EN / 中`）
+
+点一下**整站换语言**：导航、页头、按钮、空状态、筛选器、合集管理、命令面板、快捷键帮助，以及 **87 个分类名**（`人物写真 → Portraits`、`9宫格 → 9-Grid`、`构成主义 → Constructivism`…）全部翻译，选择会被记住。提示词正文与分类参数保持中文（那是内容本身）。共 **261 组 UI 文案 + 87 个分类名**。
+
+| 英文版首页 | 英文版画廊（分面与筛选也翻译） |
+| --- | --- |
+| ![英文首页](docs/screenshots/features/10-english-home.png) | ![英文画廊](docs/screenshots/features/11-english-gallery.png) |
+
+### 8. PWA · 快捷键 · 手机端
+
+- **PWA**：带 `manifest.webmanifest` + Service Worker，可「安装到桌面」，离线能浏览外壳与轻量数据
+- **快捷键**：按 `?` 看全部；`R` 随机漫游；右下角常驻 🎲 浮球
+- **手机端导航改版**：顶栏只留 **语言 / 切换版本 / 主题** 三个按钮 + 汉堡菜单，其余（命令面板、投稿等）全部收进菜单；≤1000px 自动切换为汉堡模式，菜单项左对齐、可滚动、点了自动收起
+
+| 手机端顶栏（三键 + 汉堡） | 展开的菜单 |
+| --- | --- |
+| ![手机端顶栏](docs/screenshots/features/16-mobile-nav.png) | ![手机菜单](docs/screenshots/features/17-mobile-menu.png) |
+
+![快捷键帮助](docs/screenshots/features/12-shortcuts.png)
+
+### 9. 油猴侧边栏脚本
+
+`userscript/shuixian-prompt-garden.user.js`：装到 Tampermonkey 后，在 ChatGPT / Claude / Gemini / Midjourney / 即梦 / DeepSeek 页面按 `Ctrl+Shift+K` 召唤侧边栏，搜索 →（有变量则填表单）→ 一键复制到剪贴板。
+**用前把脚本顶部的 `SITE` 改成你的线上地址。** 站点 `_headers` 已为 `/data/*` 打开 CORS，这是脚本能跨域读数据的前提。
+
+### 10. 经典版同步增强
+
+经典版有自己一套 `base.js`，新功能是独立实现的：**命令面板 `⌘K`**、**智能搜索（模糊 + 拼音 + 高亮）**、**变量填空复制**、**灯箱增强**（备注 / 使用次数 / 标记已用 / 下载 / 复制 Markdown / 命中标签）、**随机漫游**、**快捷键帮助**、**LQIP**。备注与使用次数和现代版**共用同一份 localStorage**，两版互通。
+
+| 经典版命令面板 | 经典版灯箱增强 |
+| --- | --- |
+| ![经典版命令面板](docs/screenshots/features/14-classic-palette.png) | ![经典版灯箱](docs/screenshots/features/15-classic-lightbox.png) |
+
+### 附：本轮修复
+
+| 问题 | 根因 | 结果 |
+| --- | --- | --- |
+| 经典版命令面板「点了没反应」 | `classic/js/base.js` 的 `const App` 没挂到 `window`，features 模块的启动判断永远为假 | 补 `window.App = App`，面板正常弹出 |
+| 经典版面板 Esc 关不掉 | 按键处理里 `if (typing) return` 排在 Esc 之前，而焦点正在输入框 | Esc 分支提前，统一关闭遮罩 |
+| 经典版每键卡顿 | 每次按键对 5,430 条全量重算小写/拼音/标签（25~61ms） | WeakMap 索引缓存 + 90ms 防抖，**单键 0.1ms**（降 250~600 倍） |
+| 现代版灯箱提示词只显示一行 | `.lb-body` 为 flex 列容器，`.lb-prompt` 被 `flex-shrink` 压到 32px（内容 1,755px） | 整段自然铺开，**截断 0px**；桌面端 grid 行高同步修正 |
+| 手机端菜单项全居中、语言按钮消失 | `.nav-links` 的 `align-items:center` 在纵向布局下变成水平居中；语言按钮被 1040px 断点隐藏 | 移动端 `align-items:stretch` + 语言按钮强制显示 |
+| 切英文后「半中半英」 | 就地替换文案必然漏掉动态生成的按钮与卡片 | 改为整站重载切换，100% 一致 |
+
+> ⚠️ 已知数据问题：约 **233 条（4.3%）**提示词的变量写作**转义引号**形式（`{argument name=\"x\"}`），当前正则只识别标准形式 `{argument name="x"}`，这批条目的「填变量」会退化为直接复制。修复方式二选一：清洗数据，或让正则同时兼容 `\"`。
 
 ### classic —— 12 大类 / 79 细类皮肤（已归档至 `old/`）
 
@@ -57,14 +156,15 @@
 
 | 目录 | 提示词 | 图片 | 页面 | 定位 |
 | --- | ---: | ---: | ---: | --- |
-| `shuixian-unified/` | 5,452 | 5,452 | 13 | **现役合并版**：现代版 9 页 + 经典版 4 页（`classic/` 子目录），右上角一键切换，共用一份数据 |
+| `shuixian-unified/` | 5,452 | 5,452 | 13 | **现役合并版 v1.0.2**：现代版 9 页 + 经典版 4 页（`classic/` 子目录），一键切换皮肤，共用一份数据；含变量填空 / 分面 / 双语 / PWA |
+| `old/shuixian-unified/` | 5,452 | 5,452 | 13 | 上一版合并版（v1.0.1，只有皮肤切换，无新增功能），已归档 |
 | `old/shuixian-deploy-modern/` | 5,452 | 5,452 | 10 | 合并前的现代版（页面级拆分），已归档 |
 | `old/shuixian-deploy-classic/` | 5,452 | 7,386 | 4 | 合并前的经典版（12 大类 / 79 细类），已归档 |
 | `old/shuixian-deploy/` | 17,427 | 19,827 | 4 | 更早一版线上站点，多一层 Twitter 收录（3,948 条），编辑式画廊皮肤 |
 | `old/shuixian-prompts/` | 17,427 | — | 4 | 同一套数据的本地开发版，图片不入库（见「图片托管」） |
 
-> `shuixian-unified/`、`old/shuixian-deploy-modern/`、`old/shuixian-deploy-classic/` 用的是同一套 5,452 条提示词，
-> 差别在信息架构与皮肤 —— 前两个版本已经合进 `shuixian-unified/`，留在 `old/` 只是为了保留历史。
+> `shuixian-unified/`、`old/shuixian-unified/`、`old/shuixian-deploy-modern/`、`old/shuixian-deploy-classic/`
+> 用的是同一套 5,452 条提示词，差别在信息架构、皮肤与功能 —— 后三个留在 `old/` 只是为了保留历史。
 > `old/` 下另外两个目录共用 17,427 条那套数据，差别在「是否含图片目录、是否作为部署包」。
 
 ## 仓库结构
@@ -72,18 +172,32 @@
 ```
 README.md
 LICENSE
-docs/screenshots/                        四个版本的界面截图
-shuixian-unified/                        现役合并版（可独立部署）
+docs/
+├── FEATURES-2026-09-20.md               v1.0.2 新增功能的完整技术说明
+└── screenshots/
+    ├── unified/                         合并版皮肤切换（4 张）
+    ├── features/                         v1.0.2 新功能（17 张）
+    └── classic/  modern/  old/           历史版本界面
+shuixian-unified/                        现役合并版 v1.0.2（可独立部署）
 ├── index.html  gallery.html  categories.html  detail.html  search.html
 ├── favorites.html  about.html  sponsor.html  submit.html  404.html
 ├── classic/                             经典版皮肤（子目录，与主站共用同一份 data/）
 │   ├── index.html  gallery.html  classify.html  favorites.html
-│   └── components/  css/  js/  images/
-├── components/  css/  js/               现代版皮肤
-├── data/                                数据集（两套皮肤共用）
-├── images/                              2 张公众号二维码
-└── _headers                             Cloudflare Pages 缓存策略
+│   ├── components/  css/  js/           含 features-classic.js / features-classic.css
+│   └── images/
+├── components/  css/                    现代版皮肤（含 features.css）
+├── js/
+│   ├── base.js                          数据加载、卡片、灯箱、收藏
+│   ├── features.js                      v1.0.2 新功能核心模块（自动装配）
+│   └── i18n.js                          文案字典：261 组 UI 文案 + 87 个分类名
+├── data/                                数据集（两套皮肤共用，含 pinyin.json）
+├── images/                              2 张公众号二维码 + 应用图标
+├── tools/                               维护脚本：拼音表 / 版本号 / i18n 注入 / 回归测试
+├── userscript/                          油猴侧边栏脚本
+├── sw.js  manifest.webmanifest          PWA（离线缓存 + 可安装到桌面）
+└── _headers                             Cloudflare Pages 缓存策略 + /data/* CORS
 old/
+├── shuixian-unified/                    上一版合并版（v1.0.1，已归档）
 ├── shuixian-deploy-modern/              合并前的现代版（已归档，可独立部署）
 ├── shuixian-deploy-classic/             合并前的经典版（已归档，可独立部署）
 ├── shuixian-deploy/                     更早的部署版（含 Twitter 收录）
@@ -140,15 +254,18 @@ python -m http.server 8093 --directory old/shuixian-deploy-modern
 `_headers` 里约定的缓存策略：
 
 - `css/` `js/` `components/` `images/` —— 长缓存（1 年，immutable）
-- `data/` —— 1 小时
+- `data/` —— 1 小时（已加 `Access-Control-Allow-Origin: *`，供油猴脚本与第三方工具跨域读数据）
 - `*.html` —— 不缓存，每次回源校验
+- `sw.js` —— `no-cache`，否则 Service Worker 更新发不出去
 
-**改 CSS / JS / 组件后必须同时做两件事**，否则边缘节点会继续返回旧文件：
+**改 CSS / JS / 组件后要同步升版本号，v1.0.2 起共 4 处**（不含 JSON 数据，数据不带 `?v=`）：
 
-1. 递增各 HTML 里的 `?v=` 与该版本 `js/base.js` 里的 `ASSET_VERSION`
-   （当前值：`shuixian-unified` 现代版 = `2`、其 `classic/` 子目录 = `24`、`old/shuixian-deploy-modern` = `2`、
-   `old/shuixian-deploy-classic` = `24`、`old/shuixian-deploy` = `6`）
+1. `js/base.js` 的 `ASSET_VERSION`、各 HTML 的 `?v=`、`sw.js` 的 `VERSION` 与 `PRECACHE` 里的 `?v=`
+   （当前值：`shuixian-unified` 现代版 = `12`、其 `classic/` 子目录 = `38`）
 2. 部署完成后 Purge Cache，本地用 `Ctrl + Shift + R` 硬刷新确认
+
+> **经典版独立计版本**：`classic/js/base.js` 的 `ASSET_VERSION` + `classic/*.html` 的 `?v=`（无 SW）。
+> 维护脚本：`tools/bump_version.py`（现代版）、`tools/bump_version_classic.py`（经典版）可一次改完多处。
 
 > **部署合并版**：把 `shuixian-unified/` 整个目录拖进 Cloudflare Pages 即可（它是自包含的，`classic/` 子目录一起带走）。
 > 如果 CF Pages 之前是按子目录（如 `shuixian-deploy-modern`）配置的，记得改成 `shuixian-unified`。
