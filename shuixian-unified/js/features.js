@@ -767,7 +767,10 @@
     container.className = 'facets';
     container.innerHTML = html;
     $$('.facet-chip[data-n]', container).forEach(b => b.addEventListener('click', () => {
-      toggleFacet(b.dataset.f, b.dataset.n); onChange && onChange();
+      toggleFacet(b.dataset.f, b.dataset.n);
+      const on = (filters.facets[b.dataset.f] || []).includes(b.dataset.n);
+      b.classList.toggle('on', on);
+      onChange && onChange();
     }));
     $$('.facet-chip[data-more]', container).forEach(b => b.addEventListener('click', () => {
       const facet = b.dataset.more; const c = counts[facet];
@@ -775,7 +778,12 @@
       const sel = filters.facets[facet] || [];
       const row = b.closest('.fopts');
       row.innerHTML = names.map(n => `<button class="facet-chip ${sel.includes(n) ? 'on' : ''}" data-f="${esc(facet)}" data-n="${esc(n)}">${esc(n)}<span class="n">${c[n]}</span></button>`).join('');
-      $$('.facet-chip[data-n]', row).forEach(x => x.addEventListener('click', () => { toggleFacet(x.dataset.f, x.dataset.n); onChange && onChange(); }));
+      $$('.facet-chip[data-n]', row).forEach(x => x.addEventListener('click', () => {
+        toggleFacet(x.dataset.f, x.dataset.n);
+        const on = (filters.facets[x.dataset.f] || []).includes(x.dataset.n);
+        x.classList.toggle('on', on);
+        onChange && onChange();
+      }));
     }));
     const clr = $('#fxFacetClear', container);
     if (clr) clr.addEventListener('click', () => { filters.facets = {}; onChange && onChange(); });
@@ -1004,6 +1012,16 @@
     const th = $('#themeBtn'); if (th) th.title = t('title_theme');
     const favA = $$('.nav-actions > a.icon-btn')[0];
     if (favA) favA.title = t('title_fav');
+
+    // 6) 数据驱动的总数 / 分类数：让硬编码处跟随 meta.json，避免与真实数据脱节
+    $$('[data-sx-count]').forEach(el => {
+      const k = el.dataset.sxCount;
+      const v = k === 'total' ? App.D.total
+              : k === 'majors' ? App.D.majors.length
+              : k === 'subs' ? App.D.subCount
+              : null;
+      if (v != null) el.textContent = Number(v).toLocaleString('en-US');
+    });
   }
 
   // 需要从运行数据补值的文案

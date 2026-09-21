@@ -10,7 +10,7 @@
    ========================================================= */
 const App = (() => {
   // ---------- 配置 ----------
-  const ASSET_VERSION = '12';                        // 每次更新静态资源请 +1，并同步 HTML 里的 ?v=
+  const ASSET_VERSION = '15';                        // 每次更新静态资源请 +1，并同步 HTML 里的 ?v=
   const IMG_BASE = "https://r2.qqsrc.com";          // Cloudflare R2 公共图床
   const FAV_KEY = 'sx-boards-v2';
   const REC_KEY = 'sx-recent-v2';
@@ -151,13 +151,12 @@ const App = (() => {
     const category = s.category || '';
     const img = s.image;
     const { bg, main } = catColor(category);
-    const hh = 180 + ((s.id || 0) % 5) * 46;
     const wm = (catLabel(category) || '图').slice(0, 1);
     const hint = '<span class="load-hint">' + esc(T('load_hint', '原图加载中，首次打开请稍候…')) + '</span>';
     const inner = img
       ? `${hint}<img class="ph-img" data-src="${esc(imgUrl(img))}" alt="${esc(catLabel(category))}" onload="this.previousElementSibling?.remove()" onerror="this.style.display='none'">`
       : `<span class="wm">${esc(wm)}</span>`;
-    return `<div class="ph" style="height:${hh}px;background:linear-gradient(140deg,${bg} 0%,${main} 135%);">${inner}</div>`;
+    return `<div class="ph" style="background:linear-gradient(140deg,${bg} 0%,${main} 135%);">${inner}</div>`;
   }
 
   function cardHTML(s){

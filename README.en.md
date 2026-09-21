@@ -4,7 +4,7 @@
 
 # 水仙的AI提示词 · Shuixian's AI Prompts
 
-**5,452 curated Chinese AI-art prompts — search, browse, copy in one click. Fully open source.**
+**5,430 curated Chinese AI-art prompts — search, browse, copy in one click. Fully open source.**
 
 12 categories · 79 subcategories · a preview image for every prompt · no login required
 
