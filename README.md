@@ -28,7 +28,7 @@
 
 ## 本次更新 · v1.0.2
 
-> 相对上一版（现归档于 `old/shuixian-unified/`）：**新增 13 个文件、11 项功能、3 处修复**。
+> 相对上一版（v1.0.1，现归档于 [archive 仓库](https://github.com/BaYue-SYJ/Awesome-shuixian-prompts-archive)）：**新增 13 个文件、11 项功能、3 处修复**。
 > 现有版本号：现代版 `?v=12`、经典版 `?v=38`。
 > 完整技术说明（含实现方式与维护脚本）见 [docs/FEATURES-2026-09-20.md](docs/FEATURES-2026-09-20.md)。
 
@@ -124,48 +124,31 @@
 
 > ⚠️ 已知数据问题：约 **233 条（4.3%）**提示词的变量写作**转义引号**形式（`{argument name=\"x\"}`），当前正则只识别标准形式 `{argument name="x"}`，这批条目的「填变量」会退化为直接复制。修复方式二选一：清洗数据，或让正则同时兼容 `\"`。
 
-### classic —— 12 大类 / 79 细类皮肤（已归档至 `old/`）
+## 历史版本
 
-| 首页 | 画廊 |
-| --- | --- |
-| ![classic 首页](docs/screenshots/classic/home.png) | ![classic 画廊](docs/screenshots/classic/gallery.png) |
+> **本仓库只保留最新版本的代码。** 旧版本的源码不再堆在文件树里，全部归档到
+> [**Awesome-shuixian-prompts-archive**](https://github.com/BaYue-SYJ/Awesome-shuixian-prompts-archive)；
+> 每个发布版本的完整快照也可以从 [Releases](https://github.com/BaYue-SYJ/shuixian-prompts/releases) 直接下载 Source code (zip)。
 
-| 分类筛选（点分类标签直接进画廊） |
-| --- |
-| ![classic 分类筛选](docs/screenshots/classic/category.png) |
+| 版本 / 目录 | 提示词 | 图片 | 定位 | 去哪找 |
+| --- | ---: | ---: | --- | --- |
+| **`shuixian-unified/`** | 5,452 | 5,452 | **现役合并版 v1.0.2**：现代版 9 页 + 经典版 4 页（`classic/` 子目录），一键切换皮肤，共用一份数据；含变量填空 / 分面 / 双语 / PWA | 就在本仓库 |
+| `shuixian-unified/`（v1.0.1） | 5,452 | 5,452 | 上一版合并版：只有皮肤切换，无 v1.0.2 的新功能 | archive 仓库 |
+| `shuixian-deploy-modern/` | 5,452 | 5,452 | 合并前的现代版（页面级拆分） | archive 仓库 |
+| `shuixian-deploy-classic/` | 5,452 | 7,386 | 合并前的经典版（12 大类 / 79 细类） | archive 仓库 |
+| `shuixian-deploy/` | 17,427 | 19,827 | 更早一版线上站点，多一层 Twitter 收录（3,948 条），编辑式画廊皮肤 | archive 仓库 |
+| `shuixian-prompts/` | 17,427 | — | 同一套数据的本地开发版，图片不入库（见「图片托管」） | archive 仓库 |
 
-### modern —— 页面级拆分皮肤（已归档至 `old/`）
+> 前四个目录用的是同一套 5,452 条提示词，差别在信息架构、皮肤与功能；
+> 后两个目录共用 17,427 条那套数据，差别在「是否含图片目录、是否作为部署包」。
 
-| 首页 | 画廊（左侧分类树） |
-| --- | --- |
-| ![modern 首页](docs/screenshots/modern/home.png) | ![modern 画廊](docs/screenshots/modern/gallery.png) |
+### 历史版本界面预览
 
-| 提示词详情（独立页面） |
-| --- |
-| ![modern 详情](docs/screenshots/modern/detail.png) |
-
-### old/shuixian-deploy —— 更早一版线上站点（含 Twitter 收录）
-
-| 首页 | 画廊 |
-| --- | --- |
-| ![旧版首页](docs/screenshots/old/home.png) | ![旧版画廊](docs/screenshots/old/gallery.png) |
-| **提示词详情** | **分类筛选** |
-| ![旧版详情](docs/screenshots/old/lightbox.png) | ![旧版分类](docs/screenshots/old/classify.png) |
-
-## 版本对照
-
-| 目录 | 提示词 | 图片 | 页面 | 定位 |
-| --- | ---: | ---: | ---: | --- |
-| `shuixian-unified/` | 5,452 | 5,452 | 13 | **现役合并版 v1.0.2**：现代版 9 页 + 经典版 4 页（`classic/` 子目录），一键切换皮肤，共用一份数据；含变量填空 / 分面 / 双语 / PWA |
-| `old/shuixian-unified/` | 5,452 | 5,452 | 13 | 上一版合并版（v1.0.1，只有皮肤切换，无新增功能），已归档 |
-| `old/shuixian-deploy-modern/` | 5,452 | 5,452 | 10 | 合并前的现代版（页面级拆分），已归档 |
-| `old/shuixian-deploy-classic/` | 5,452 | 7,386 | 4 | 合并前的经典版（12 大类 / 79 细类），已归档 |
-| `old/shuixian-deploy/` | 17,427 | 19,827 | 4 | 更早一版线上站点，多一层 Twitter 收录（3,948 条），编辑式画廊皮肤 |
-| `old/shuixian-prompts/` | 17,427 | — | 4 | 同一套数据的本地开发版，图片不入库（见「图片托管」） |
-
-> `shuixian-unified/`、`old/shuixian-unified/`、`old/shuixian-deploy-modern/`、`old/shuixian-deploy-classic/`
-> 用的是同一套 5,452 条提示词，差别在信息架构、皮肤与功能 —— 后三个留在 `old/` 只是为了保留历史。
-> `old/` 下另外两个目录共用 17,427 条那套数据，差别在「是否含图片目录、是否作为部署包」。
+| classic（12 大类 / 79 细类） | modern（页面级拆分） | 更早的 deploy 版（含 Twitter 收录） |
+| --- | --- | --- |
+| ![classic 首页](docs/screenshots/classic/home.png) | ![modern 首页](docs/screenshots/modern/home.png) | ![旧版首页](docs/screenshots/old/home.png) |
+| ![classic 画廊](docs/screenshots/classic/gallery.png) | ![modern 画廊](docs/screenshots/modern/gallery.png) | ![旧版画廊](docs/screenshots/old/gallery.png) |
+| ![classic 分类](docs/screenshots/classic/category.png) | ![modern 详情](docs/screenshots/modern/detail.png) | ![旧版分类](docs/screenshots/old/classify.png) |
 
 ## 仓库结构
 
@@ -196,13 +179,11 @@ shuixian-unified/                        现役合并版 v1.0.2（可独立部�
 ├── userscript/                          油猴侧边栏脚本
 ├── sw.js  manifest.webmanifest          PWA（离线缓存 + 可安装到桌面）
 └── _headers                             Cloudflare Pages 缓存策略 + /data/* CORS
-old/
-├── shuixian-unified/                    上一版合并版（v1.0.1，已归档）
-├── shuixian-deploy-modern/              合并前的现代版（已归档，可独立部署）
-├── shuixian-deploy-classic/             合并前的经典版（已归档，可独立部署）
-├── shuixian-deploy/                     更早的部署版（含 Twitter 收录）
-└── shuixian-prompts/                    本地开发版（完整数据 + 重分类脚本）
 ```
+
+> 历史版本的源码不在本仓库（见「历史版本」一节），归档在
+> [Awesome-shuixian-prompts-archive](https://github.com/BaYue-SYJ/Awesome-shuixian-prompts-archive)。
+> 本仓库的文件树只保留**最新版本**。
 
 ## 数据
 
@@ -213,21 +194,21 @@ old/
 | `data/list.part1~3.json` | 轻量列表（标题、分类、点赞、图片路径），首屏加载 |
 | `data/prompts.part1~3.json` | 完整数据（含 `prompt` 正文），按需加载 |
 | `data/categories.json` / `data/meta.json` | 分类结构（经典版用扁平映射，现代版用大类 → 小类树） |
-| `data/list-twitter.json` `data/prompts-twitter.json` | Twitter 收录（仅 `old/shuixian-deploy` 有数据） |
+| `data/list-twitter.json` `data/prompts-twitter.json` | Twitter 收录（仅 archive 仓库里的 `shuixian-deploy` 有数据） |
 | `data/twitter_manifest.json` | 指定 Twitter 分片文件清单 |
 
 字段随版本递进变精简：
 
 | 版本 | 字段 |
 | --- | --- |
-| `old/shuixian-deploy` | `id` `title` `prompt` `image` `images` `category` `likes` `author` `slug` `resultsCount` `thumb` `tweet` |
-| 经典版（`shuixian-unified/classic`、`old/shuixian-deploy-classic`） | 同上，另带 `themes` `styles` `person` |
-| 现代版（`shuixian-unified`、`old/shuixian-deploy-modern`） | `id` `title` `prompt` `image` `category` `likes` |
+| 更早的 deploy 版（archive 仓库） | `id` `title` `prompt` `image` `images` `category` `likes` `author` `slug` `resultsCount` `thumb` `tweet` |
+| 经典版（`shuixian-unified/classic`；archive 仓库的 `shuixian-deploy-classic`） | 同上，另带 `themes` `styles` `person` |
+| 现代版（`shuixian-unified`；archive 仓库的 `shuixian-deploy-modern`） | `id` `title` `prompt` `image` `category` `likes` |
 
 ## 图片托管：为什么不在 git 里
 
 原图 `images/originals`（2.8 G）与 Twitter 图 `images/twitter`（5.7 G）都在 **R2 对象存储**，
-站点通过 `https://r2.qqsrc.com` 加载，不依赖本地文件，因此 `old/shuixian-prompts/images/` 整体被 `.gitignore` 排除。
+站点通过 `https://r2.qqsrc.com` 加载，不依赖本地文件，因此 `images/originals/` 与 `images/twitter/` 整体被 `.gitignore` 排除。
 
 - 主库图片路径：`images/originals/{id}.jpg`
 - Twitter 图片路径：`images/twitter/{id}.jpg`
@@ -241,9 +222,6 @@ old/
 
 ```bash
 python -m http.server 8094 --directory shuixian-unified
-python -m http.server 8091 --directory old/shuixian-deploy
-python -m http.server 8092 --directory old/shuixian-deploy-classic
-python -m http.server 8093 --directory old/shuixian-deploy-modern
 ```
 
 打开 <http://localhost:8094/> 就是合并版；点右上角「经典版 / 现代版」按钮切换皮肤。

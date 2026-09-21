@@ -27,7 +27,7 @@
 
 ## What's new in v1.0.2
 
-> Compared with the previous build (now archived at `old/shuixian-unified/`): **13 new files, 11 new features, 6 fixes**.
+> Compared with the previous build (v1.0.1, now archived at [Awesome-shuixian-prompts-archive](https://github.com/BaYue-SYJ/Awesome-shuixian-prompts-archive)): **13 new files, 11 new features, 6 fixes**.
 > Current asset versions: modern `?v=12`, classic `?v=38`.
 > Full technical write-up (implementation notes + maintenance scripts): [docs/FEATURES-2026-09-20.md](docs/FEATURES-2026-09-20.md)（中文）.
 
@@ -56,49 +56,32 @@
 
 > Known data issue: ~233 prompts (4.3%) store variables with **escaped quotes** (`{argument name=\"x\"}`) which the current regex does not match, so their “fill variables” falls back to a plain copy. Fix by cleaning the data or loosening the regex.
 
-### classic — the 12-category / 79-subcategory skin (archived under `old/`)
+## Older versions
 
-| Home | Gallery |
-| --- | --- |
-| ![classic home](docs/screenshots/classic/home.png) | ![classic gallery](docs/screenshots/classic/gallery.png) |
+> **This repository only keeps the latest release.** Older source trees are no longer stored in the file tree — they live in
+> [**Awesome-shuixian-prompts-archive**](https://github.com/BaYue-SYJ/Awesome-shuixian-prompts-archive). Every tagged release can also be downloaded as
+> Source code (zip) from [Releases](https://github.com/BaYue-SYJ/shuixian-prompts/releases).
 
-| Category filter (tap a category to jump straight into the gallery) |
-| --- |
-| ![classic category filter](docs/screenshots/classic/category.png) |
+| Version / directory | Prompts | Images | What it is | Where |
+| --- | ---: | ---: | --- | --- |
+| **`shuixian-unified/`** | 5,452 | 5,452 | **Current merged build v1.0.2**: 9 modern pages + 4 classic pages, one-click skin switch, shared dataset, variable filling / facets / bilingual UI / PWA | this repo |
+| `shuixian-unified/` (v1.0.1) | 5,452 | 5,452 | Previous merged build — skin switching only | archive repo |
+| `shuixian-deploy-modern/` | 5,452 | 5,452 | The modern skin before the merge | archive repo |
+| `shuixian-deploy-classic/` | 5,452 | 7,386 | The classic skin before the merge (12 categories / 79 subcategories) | archive repo |
+| `shuixian-deploy/` | 17,427 | 19,827 | An earlier live site with a Twitter-collected layer (3,948 entries) | archive repo |
+| `shuixian-prompts/` | 17,427 | — | Local development copy of the 17,427-prompt dataset | archive repo |
 
-### modern — the page-per-view skin (archived under `old/`)
+> The first four share the same 5,452 prompts; the last two share the 17,427-prompt dataset.
 
-| Home | Gallery (category tree on the left) |
-| --- | --- |
-| ![modern home](docs/screenshots/modern/home.png) | ![modern gallery](docs/screenshots/modern/gallery.png) |
+### Preview of older versions
 
-| Prompt detail (its own page) |
-| --- |
-| ![modern detail](docs/screenshots/modern/detail.png) |
-
-### old/shuixian-deploy — an earlier live site (includes the Twitter collection)
-
-| Home | Gallery |
-| --- | --- |
-| ![old home](docs/screenshots/old/home.png) | ![old gallery](docs/screenshots/old/gallery.png) |
-| **Prompt detail** | **Category filter** |
-| ![old detail](docs/screenshots/old/lightbox.png) | ![old category filter](docs/screenshots/old/classify.png) |
+| classic | modern | earlier deploy build |
+| --- | --- | --- |
+| ![classic home](docs/screenshots/classic/home.png) | ![modern home](docs/screenshots/modern/home.png) | ![old home](docs/screenshots/old/home.png) |
+| ![classic gallery](docs/screenshots/classic/gallery.png) | ![modern gallery](docs/screenshots/modern/gallery.png) | ![old gallery](docs/screenshots/old/gallery.png) |
+| ![classic category](docs/screenshots/classic/category.png) | ![modern detail](docs/screenshots/modern/detail.png) | ![old category filter](docs/screenshots/old/classify.png) |
 
 ## Version comparison
-
-| Directory | Prompts | Images | Pages | What it is |
-| --- | ---: | ---: | ---: | --- |
-| `shuixian-unified/` | 5,452 | 5,452 | 13 | **The current merged build, v1.0.2**: 9 modern pages + 4 classic pages (in the `classic/` subdirectory), one button switches skins, both share one dataset — plus variable filling, facet tags, bilingual UI and PWA |
-| `old/shuixian-unified/` | 5,452 | 5,452 | 13 | The previous merged build (v1.0.1 — skin switching only), archived |
-| `old/shuixian-deploy-modern/` | 5,452 | 5,452 | 10 | The modern skin before the merge (one page per view), archived |
-| `old/shuixian-deploy-classic/` | 5,452 | 7,386 | 4 | The classic skin before the merge (12 categories / 79 subcategories), archived |
-| `old/shuixian-deploy/` | 17,427 | 19,827 | 4 | An earlier live site, plus a Twitter-collected layer (3,948 entries), editorial gallery skin |
-| `old/shuixian-prompts/` | 17,427 | — | 4 | Local development copy of the same dataset; images are not committed (see "Image hosting") |
-
-> `shuixian-unified/`, `old/shuixian-unified/`, `old/shuixian-deploy-modern/` and `old/shuixian-deploy-classic/`
-> all use the same 5,452 prompts; they differ in information architecture, skin and features — the last three are
-> kept under `old/` for history only.
-> The other two directories under `old/` share the 17,427-prompt dataset; they differ in whether an image folder is present and whether the folder is meant as a deployable bundle.
 
 ## Repository layout
 
@@ -125,13 +108,10 @@ shuixian-unified/                        The current merged build, v1.0.2 (deplo
 ├── userscript/                          Tampermonkey sidebar script
 ├── sw.js  manifest.webmanifest          PWA (offline cache + installable)
 └── _headers                             Cloudflare Pages caching + CORS for /data/*
-old/
-├── shuixian-unified/                    Previous merged build (v1.0.1, archived)
-├── shuixian-deploy-modern/              Modern skin before the merge (archived)
-├── shuixian-deploy-classic/             Classic skin before the merge (archived)
-├── shuixian-deploy/                     Earlier deployable build (includes the Twitter collection)
-└── shuixian-prompts/                    Local dev copy (full dataset + re-categorisation scripts)
 ```
+
+> Older source trees are not kept in this repository (see "Older versions") — they are archived at
+> [Awesome-shuixian-prompts-archive](https://github.com/BaYue-SYJ/Awesome-shuixian-prompts-archive). The file tree here holds the **latest** release only.
 
 ## Data
 
@@ -142,20 +122,20 @@ Each version ships its own `data/` folder and loads it in two layers: a lightwei
 | `data/list.part1~3.json` | Lightweight list (title, category, likes, image path) — loaded on first paint |
 | `data/prompts.part1~3.json` | Full records (including the `prompt` body) — loaded on demand |
 | `data/categories.json` / `data/meta.json` | Category structure (the classic skin uses a flat map, the modern skin a major → subcategory tree) |
-| `data/list-twitter.json` `data/prompts-twitter.json` | Twitter collection (only `old/shuixian-deploy` carries data) |
+| `data/list-twitter.json` `data/prompts-twitter.json` | Twitter collection (only the `shuixian-deploy` copy in the archive repo carries data) |
 | `data/twitter_manifest.json` | Lists the Twitter shard files |
 
 Fields get leaner with each version:
 
 | Version | Fields |
 | --- | --- |
-| `old/shuixian-deploy` | `id` `title` `prompt` `image` `images` `category` `likes` `author` `slug` `resultsCount` `thumb` `tweet` |
-| classic skin (`shuixian-unified/classic`, `old/shuixian-deploy-classic`) | Same as above, plus `themes` `styles` `person` |
-| modern skin (`shuixian-unified`, `old/shuixian-deploy-modern`) | `id` `title` `prompt` `image` `category` `likes` |
+| earlier deploy build (archive repo) | `id` `title` `prompt` `image` `images` `category` `likes` `author` `slug` `resultsCount` `thumb` `tweet` |
+| classic skin (`shuixian-unified/classic`; `shuixian-deploy-classic` in the archive repo) | Same as above, plus `themes` `styles` `person` |
+| modern skin (`shuixian-unified`; `shuixian-deploy-modern` in the archive repo) | `id` `title` `prompt` `image` `category` `likes` |
 
 ## Image hosting: why images are not in git
 
-The originals under `images/originals` (2.8 GB) and the Twitter images under `images/twitter` (5.7 GB) live in **Cloudflare R2** object storage. The site loads them from `https://r2.qqsrc.com` and needs no local files, so `old/shuixian-prompts/images/` is excluded by `.gitignore`.
+The originals under `images/originals` (2.8 GB) and the Twitter images under `images/twitter` (5.7 GB) live in **Cloudflare R2** object storage. The site loads them from `https://r2.qqsrc.com` and needs no local files, so `images/originals/` and `images/twitter/` are excluded by `.gitignore`.
 
 - Main library path: `images/originals/{id}.jpg`
 - Twitter images: `images/twitter/{id}.jpg`
@@ -169,9 +149,6 @@ Run one port per version to compare them side by side. All of them must be serve
 
 ```bash
 python -m http.server 8094 --directory shuixian-unified
-python -m http.server 8091 --directory old/shuixian-deploy
-python -m http.server 8092 --directory old/shuixian-deploy-classic
-python -m http.server 8093 --directory old/shuixian-deploy-modern
 ```
 
 Open <http://localhost:8094/> for the merged build, then use the «经典版 / 现代版» button in the header to switch skins.
